@@ -464,23 +464,14 @@
   <div class="slide-num"></div>
   <div class="kicker">Финансы · интерактив</div>
   <h2>Калькулятор экономики инференса</h2>
-  <p class="lead">Живая модель себестоимости AI-операций: перепродажа токенов через агрегатор (OpenRouter) против собственного локального инференса. Все параметры — допущения: двигайте ползунки и смотрите маржу и точку перехода на своё железо.</p>
+  <p class="lead">Живая модель экономики: сколько зарабатываем при разном масштабе сети и когда собственный инференс становится выгоднее закупки токенов. Пять рычагов — остальное зафиксировано в базовых допущениях.</p>
   <div class="calc-grid">
     <div class="calc-box">
-      <div class="csect">Объём</div>
+      <div class="csect">Масштаб</div>
       <div class="cfield"><label>Платящих агентств <span class="val" id="v_ag"></span></label><input type="range" id="i_ag" min="5" max="2000" step="5" value="100"></div>
-      <div class="cfield"><label>Агентов на агентство <span class="val" id="v_seats"></span></label><input type="range" id="i_seats" min="1" max="20" step="1" value="5"></div>
-      <div class="cfield"><label>AI-операций на агента в день <span class="val" id="v_ops"></span></label><input type="range" id="i_ops" min="5" max="200" step="5" value="30"></div>
-      <div class="cfield"><label>Токенов на операцию (in+out), тыс. <span class="val" id="v_tok"></span></label><input type="range" id="i_tok" min="1" max="50" step="1" value="8"></div>
-      <div class="cfield"><label>Клиентский чат, % сверх агентских <span class="val" id="v_client"></span></label><input type="range" id="i_client" min="0" max="300" step="10" value="100"></div>
-      <div class="csect">Режим 1 · OpenRouter</div>
-      <div class="cfield"><label>Закупка, $/1M токенов <span class="val" id="v_or"></span></label><input type="range" id="i_or" min="0.1" max="5" step="0.05" value="0.6"></div>
-      <div class="csect">Режим 2 · Свой инференс</div>
-      <div class="cfield"><label>Стоимость узла, $ тыс. <span class="val" id="v_node"></span></label><input type="range" id="i_node" min="3" max="60" step="1" value="12"></div>
-      <div class="cfield"><label>Производительность, токенов/сек <span class="val" id="v_tps"></span></label><input type="range" id="i_tps" min="50" max="3000" step="50" value="600"></div>
-      <div class="cfield"><label>Амортизация, мес <span class="val" id="v_amort"></span></label><input type="range" id="i_amort" min="12" max="60" step="6" value="36"></div>
-      <div class="cfield"><label>Опекс узла, $/мес <span class="val" id="v_opex"></span></label><input type="range" id="i_opex" min="0" max="800" step="25" value="150"></div>
-      <div class="cfield"><label>Средняя загрузка узла, % <span class="val" id="v_util"></span></label><input type="range" id="i_util" min="5" max="80" step="5" value="30"></div>
+      <div class="cfield"><label>Интенсивность использования AI <span class="val" id="v_use"></span></label><input type="range" id="i_use" min="50" max="300" step="10" value="100"></div>
+      <div class="csect">Себестоимость</div>
+      <div class="cfield"><label>Закупка токенов (OpenRouter), $/1M <span class="val" id="v_or"></span></label><input type="range" id="i_or" min="0.1" max="5" step="0.05" value="0.6"></div>
       <div class="csect">Прайсинг</div>
       <div class="cfield"><label>Продажа токенов, $/1M <span class="val" id="v_sell"></span></label><input type="range" id="i_sell" min="0.5" max="20" step="0.25" value="4"></div>
       <div class="cfield"><label>SaaS-фикс, $/мес с агентства <span class="val" id="v_fix"></span></label><input type="range" id="i_fix" min="0" max="500" step="10" value="150"></div>
@@ -498,7 +489,6 @@
           <tr><th>Показатель</th><th>OpenRouter</th><th>Свой инференс</th></tr>
           <tr><td>Себестоимость, $/1M ток.</td><td id="c_or_cost"></td><td id="c_own_cost"></td></tr>
           <tr><td>Затраты, $/мес</td><td id="c_or_month"></td><td id="c_own_month"></td></tr>
-          <tr><td>Узлов требуется</td><td style="color:var(--text-dim)">—</td><td id="c_nodes"></td></tr>
           <tr><td>Маржа на токенах</td><td id="c_or_margin"></td><td id="c_own_margin"></td></tr>
           <tr><td>Прибыль на токенах, $/мес</td><td id="c_or_profit"></td><td id="c_own_profit"></td></tr>
         </table>
@@ -510,7 +500,7 @@
         <div class="cstat"><div class="l">Из них токен-пул</div><div class="v" id="p_pool"></div></div>
         <div class="cstat"><div class="l">Валовая маржа чека</div><div class="v green" id="p_margin"></div></div>
       </div>
-      <p class="footnote" style="margin-top:14px">Методика: объём = агентства × агенты × операций/день × 30.4 × токенов на операцию × (1 + клиентский чат). Свой инференс = (амортизация узла + опекс) / (производительность × загрузка). Без резервирования и DevOps — для решения о железе закладывайте запас 20–30%.</p>
+      <p class="footnote" style="margin-top:14px">Базовые допущения (интенсивность 100%): агентство из 5 агентов, ~30 AI-операций на агента в день, ~8K токенов на операцию, клиентский чат удваивает объём. Свой инференс: узел $12K с амортизацией 36 мес, $150/мес опекса, 600 токенов/сек при загрузке 30%. Резервирование и DevOps не заложены — для решения о железе запас 20–30%.</p>
     </div>
   </div>
 </section>
@@ -721,12 +711,17 @@
     document.getElementById('progress').style.width=(p*100)+'%';
   },{passive:true});
 
-  // ── калькулятор экономики инференса ──
+  // ── калькулятор экономики инференса (инвестиционная версия) ──
   (function(){
     const $=id=>document.getElementById(id);
     if(!$('i_ag'))return;
-    const inputs=['ag','seats','ops','tok','client','or','node','tps','amort','opex','util','sell','fix'];
+    const inputs=['ag','use','or','sell','fix'];
+    // базовые допущения (зафиксированы): агентство 5 агентов × 30 операций/день × 8K токенов, клиентский чат ×2
+    const BASE_TOK_PER_AG=5*30*30.4*8000*2; // токенов на агентство в месяц при интенсивности 100%
+    // свой инференс: узел $12K / 36 мес + $150 опекс, 600 ток/с при загрузке 30%
     const SEC_MONTH=30.4*24*3600;
+    const NODE_MONTHLY=12000/36+150;
+    const NODE_CAPACITY=600*0.3*SEC_MONTH;
     const fmt=(n,d=0)=>isFinite(n)?n.toLocaleString('ru-RU',{maximumFractionDigits:d}):'—';
     const money=(n,d=0)=>'$'+fmt(n,d);
     const big=n=>n>=1e9?fmt(n/1e9,1)+' млрд':n>=1e6?fmt(n/1e6,1)+' млн':n>=1e3?fmt(n/1e3,0)+' тыс':fmt(n);
@@ -734,23 +729,17 @@
     const profitCell=p=>`<span class="${p>=0?'g':'r'}">${money(p)}</span>`;
 
     function calc(){
-      const ag=+$('i_ag').value, seats=+$('i_seats').value, ops=+$('i_ops').value,
-            tokK=+$('i_tok').value, client=+$('i_client').value/100,
+      const ag=+$('i_ag').value, use=+$('i_use').value/100,
             orPrice=+$('i_or').value,
-            nodeK=+$('i_node').value, tps=+$('i_tps').value, amort=+$('i_amort').value,
-            opex=+$('i_opex').value, util=+$('i_util').value/100,
             sell=+$('i_sell').value, fix=+$('i_fix').value;
 
-      $('v_ag').textContent=fmt(ag); $('v_seats').textContent=fmt(seats);
-      $('v_ops').textContent=fmt(ops); $('v_tok').textContent=fmt(tokK)+'K';
-      $('v_client').textContent='+'+fmt(client*100)+'%';
+      $('v_ag').textContent=fmt(ag);
+      $('v_use').textContent=fmt(use*100)+'%';
       $('v_or').textContent='$'+orPrice.toFixed(2);
-      $('v_node').textContent='$'+fmt(nodeK)+'K'; $('v_tps').textContent=fmt(tps);
-      $('v_amort').textContent=fmt(amort); $('v_opex').textContent='$'+fmt(opex);
-      $('v_util').textContent=fmt(util*100)+'%';
       $('v_sell').textContent='$'+sell.toFixed(2); $('v_fix').textContent='$'+fmt(fix);
 
-      const tokMonth=ag*seats*ops*30.4*tokK*1000*(1+client);
+      const tokPerAg=BASE_TOK_PER_AG*use;
+      const tokMonth=ag*tokPerAg;
       const tokM=tokMonth/1e6;
       const revTok=tokM*sell;
       const revAll=revTok+ag*fix;
@@ -758,10 +747,8 @@
       const orMonth=tokM*orPrice;
       const orMargin=sell>0?(1-orPrice/sell):0;
 
-      const nodeCapacity=tps*util*SEC_MONTH;
-      const nodes=Math.max(1,Math.ceil(tokMonth/nodeCapacity));
-      const nodeMonthly=(nodeK*1000)/amort+opex;
-      const ownMonth=nodes*nodeMonthly;
+      const nodes=Math.max(1,Math.ceil(tokMonth/NODE_CAPACITY));
+      const ownMonth=nodes*NODE_MONTHLY;
       const ownCostPerM=ownMonth/tokM;
       const ownMargin=sell>0?(1-ownCostPerM/sell):0;
 
@@ -774,26 +761,24 @@
       $('c_own_cost').textContent='$'+ownCostPerM.toFixed(2);
       $('c_or_month').textContent=money(orMonth);
       $('c_own_month').textContent=money(ownMonth);
-      $('c_nodes').textContent=fmt(nodes);
       $('c_or_margin').innerHTML=marginCell(orMargin);
       $('c_own_margin').innerHTML=marginCell(ownMargin);
       $('c_or_profit').innerHTML=profitCell(revTok-orMonth);
       $('c_own_profit').innerHTML=profitCell(revTok-ownMonth);
 
-      const tokPerAg=seats*ops*30.4*tokK*1000*(1+client);
       let be=null;
       for(let n=5;n<=5000;n+=5){
         const tm=n*tokPerAg;
-        const nd=Math.max(1,Math.ceil(tm/nodeCapacity));
-        if(nd*nodeMonthly < tm/1e6*orPrice){be=n;break;}
+        const nd=Math.max(1,Math.ceil(tm/NODE_CAPACITY));
+        if(nd*NODE_MONTHLY < tm/1e6*orPrice){be=n;break;}
       }
       let v='';
       if(ownMonth<orMonth){
-        v=`При текущих параметрах <b>свой инференс уже дешевле</b>: ${money(ownMonth)}/мес против ${money(orMonth)}/мес у OpenRouter (${fmt(nodes)} узлов, экономия ${money(orMonth-ownMonth)}/мес). `;
+        v=`При текущих параметрах <b>свой инференс уже дешевле</b>: ${money(ownMonth)}/мес против ${money(orMonth)}/мес у OpenRouter (экономия ${money(orMonth-ownMonth)}/мес). `;
       }else{
         v=`При текущих параметрах <b>выгоднее OpenRouter</b>: ${money(orMonth)}/мес против ${money(ownMonth)}/мес на своём железе. `;
       }
-      v+=be?`Точка перехода на своё железо — примерно <b>${fmt(be)} агентств</b>.`:`Свой инференс не окупается до 5000 агентств — меняйте производительность узла, загрузку или закупочную цену.`;
+      v+=be?`Точка перехода на своё железо — примерно <b>${fmt(be)} агентств</b>.`:`Свой инференс не окупается до 5000 агентств при этой закупочной цене.`;
       $('verdict').innerHTML=v;
 
       const bestCost=Math.min(orMonth,ownMonth);
