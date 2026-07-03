@@ -225,6 +225,30 @@
   .act2{
     background:linear-gradient(135deg,#141a28 0%,#1a1408 100%);
   }
+  /* калькулятор */
+  .calc-grid{display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:32px;align-items:start}
+  @media(max-width:960px){.calc-grid{grid-template-columns:1fr}}
+  .calc-box{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px}
+  .cfield{margin-bottom:12px}
+  .cfield label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-dim);margin-bottom:3px}
+  .cfield label .val{font-family:var(--mono);color:var(--accent);font-weight:600}
+  .cfield input[type=range]{width:100%;accent-color:var(--accent)}
+  .csect{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin:16px 0 10px;padding-top:12px;border-top:1px solid var(--border)}
+  .csect:first-child{margin-top:0;padding-top:0;border-top:none}
+  .cstat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+  .cstat{background:var(--bg-accent);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .cstat .l{font-size:11.5px;color:var(--text-dim);margin-bottom:2px}
+  .cstat .v{font-family:var(--mono);font-size:19px;font-weight:700}
+  .cstat .v.gold{color:var(--accent)}
+  .cstat .v.green{color:var(--green)}
+  table.ctable{margin-top:0;font-size:14px}
+  table.ctable td{font-family:var(--mono);font-size:13px;text-align:right;padding:9px 12px}
+  table.ctable td:first-child{font-family:inherit;font-size:14px;text-align:left;font-weight:600}
+  table.ctable th{text-align:right}
+  table.ctable th:first-child{text-align:left}
+  .cverdict{border:1px solid var(--accent);background:rgba(255,182,72,.06);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:14.5px}
+  .cverdict b{color:var(--accent)}
+  .g{color:var(--green)} .r{color:var(--red)}
 </style>
 </head>
 <body>
@@ -432,7 +456,63 @@
     <div class="item"><div class="v">≤$2.5K</div><div class="l">целевой CAC — удерживает LTV:CAC выше 3:1</div></div>
     <div class="item"><div class="v">2×</div><div class="l">преимущество по стоимости роста: вертикальный SaaS тратит на S&M 17% выручки против 34% у горизонтального</div></div>
   </div>
-  <p class="footnote">Токены — второй контур роста выручки поверх подписки; апсайд от перерасхода токен-пулов в сценарий не заложен — оценка консервативная. Интерактивный калькулятор экономики инференса: <a href="calculator.html">calculator.html</a> (внутренний инструмент).</p>
+  <p class="footnote">Токены — второй контур роста выручки поверх подписки; апсайд от перерасхода токен-пулов в сценарий не заложен — оценка консервативная. Экономика инференса, стоящая за прайсингом, — на следующем слайде.</p>
+</section>
+
+<!-- Калькулятор экономики инференса -->
+<section class="slide" id="s10b">
+  <div class="slide-num"></div>
+  <div class="kicker">Финансы · интерактив</div>
+  <h2>Калькулятор экономики инференса</h2>
+  <p class="lead">Живая модель себестоимости AI-операций: перепродажа токенов через агрегатор (OpenRouter) против собственного локального инференса. Все параметры — допущения: двигайте ползунки и смотрите маржу и точку перехода на своё железо.</p>
+  <div class="calc-grid">
+    <div class="calc-box">
+      <div class="csect">Объём</div>
+      <div class="cfield"><label>Платящих агентств <span class="val" id="v_ag"></span></label><input type="range" id="i_ag" min="5" max="2000" step="5" value="100"></div>
+      <div class="cfield"><label>Агентов на агентство <span class="val" id="v_seats"></span></label><input type="range" id="i_seats" min="1" max="20" step="1" value="5"></div>
+      <div class="cfield"><label>AI-операций на агента в день <span class="val" id="v_ops"></span></label><input type="range" id="i_ops" min="5" max="200" step="5" value="30"></div>
+      <div class="cfield"><label>Токенов на операцию (in+out), тыс. <span class="val" id="v_tok"></span></label><input type="range" id="i_tok" min="1" max="50" step="1" value="8"></div>
+      <div class="cfield"><label>Клиентский чат, % сверх агентских <span class="val" id="v_client"></span></label><input type="range" id="i_client" min="0" max="300" step="10" value="100"></div>
+      <div class="csect">Режим 1 · OpenRouter</div>
+      <div class="cfield"><label>Закупка, $/1M токенов <span class="val" id="v_or"></span></label><input type="range" id="i_or" min="0.1" max="5" step="0.05" value="0.6"></div>
+      <div class="csect">Режим 2 · Свой инференс</div>
+      <div class="cfield"><label>Стоимость узла, $ тыс. <span class="val" id="v_node"></span></label><input type="range" id="i_node" min="3" max="60" step="1" value="12"></div>
+      <div class="cfield"><label>Производительность, токенов/сек <span class="val" id="v_tps"></span></label><input type="range" id="i_tps" min="50" max="3000" step="50" value="600"></div>
+      <div class="cfield"><label>Амортизация, мес <span class="val" id="v_amort"></span></label><input type="range" id="i_amort" min="12" max="60" step="6" value="36"></div>
+      <div class="cfield"><label>Опекс узла, $/мес <span class="val" id="v_opex"></span></label><input type="range" id="i_opex" min="0" max="800" step="25" value="150"></div>
+      <div class="cfield"><label>Средняя загрузка узла, % <span class="val" id="v_util"></span></label><input type="range" id="i_util" min="5" max="80" step="5" value="30"></div>
+      <div class="csect">Прайсинг</div>
+      <div class="cfield"><label>Продажа токенов, $/1M <span class="val" id="v_sell"></span></label><input type="range" id="i_sell" min="0.5" max="20" step="0.25" value="4"></div>
+      <div class="cfield"><label>SaaS-фикс, $/мес с агентства <span class="val" id="v_fix"></span></label><input type="range" id="i_fix" min="0" max="500" step="10" value="150"></div>
+    </div>
+    <div>
+      <div class="cstat-row">
+        <div class="cstat"><div class="l">Токенов/мес всего</div><div class="v" id="o_tokens"></div></div>
+        <div class="cstat"><div class="l">Выручка токены/мес</div><div class="v gold" id="o_revtok"></div></div>
+        <div class="cstat"><div class="l">Выручка всего/мес</div><div class="v gold" id="o_revall"></div></div>
+        <div class="cstat"><div class="l">ARR</div><div class="v gold" id="p_arr"></div></div>
+      </div>
+      <div class="calc-box">
+        <div style="overflow-x:auto">
+        <table class="ctable">
+          <tr><th>Показатель</th><th>OpenRouter</th><th>Свой инференс</th></tr>
+          <tr><td>Себестоимость, $/1M ток.</td><td id="c_or_cost"></td><td id="c_own_cost"></td></tr>
+          <tr><td>Затраты, $/мес</td><td id="c_or_month"></td><td id="c_own_month"></td></tr>
+          <tr><td>Узлов требуется</td><td style="color:var(--text-dim)">—</td><td id="c_nodes"></td></tr>
+          <tr><td>Маржа на токенах</td><td id="c_or_margin"></td><td id="c_own_margin"></td></tr>
+          <tr><td>Прибыль на токенах, $/мес</td><td id="c_or_profit"></td><td id="c_own_profit"></td></tr>
+        </table>
+        </div>
+        <div class="cverdict" id="verdict"></div>
+      </div>
+      <div class="cstat-row" style="margin-top:18px">
+        <div class="cstat"><div class="l">Средний чек агентства/мес</div><div class="v" id="p_arpu"></div></div>
+        <div class="cstat"><div class="l">Из них токен-пул</div><div class="v" id="p_pool"></div></div>
+        <div class="cstat"><div class="l">Валовая маржа чека</div><div class="v green" id="p_margin"></div></div>
+      </div>
+      <p class="footnote" style="margin-top:14px">Методика: объём = агентства × агенты × операций/день × 30.4 × токенов на операцию × (1 + клиентский чат). Свой инференс = (амортизация узла + опекс) / (производительность × загрузка). Без резервирования и DevOps — для решения о железе закладывайте запас 20–30%.</p>
+    </div>
+  </div>
 </section>
 
 <!-- 11. Устойчивость к AI -->
@@ -616,11 +696,17 @@
 <script>
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
+  // автонумерация слайдов
+  slides.forEach((s,i)=>{
+    const n=s.querySelector('.slide-num');
+    if(n)n.textContent=String(i+1).padStart(2,'0')+' / '+slides.length;
+  });
   function goTo(i){
     cur=Math.max(0,Math.min(slides.length-1,i));
     slides[cur].scrollIntoView({behavior:'smooth'});
   }
   document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT')return;
     if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();goTo(cur+1)}
     if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();goTo(cur-1)}
     if(e.key==='Home'){e.preventDefault();goTo(0)}
@@ -634,6 +720,90 @@
     const p=scrollY/(document.body.scrollHeight-innerHeight);
     document.getElementById('progress').style.width=(p*100)+'%';
   },{passive:true});
+
+  // ── калькулятор экономики инференса ──
+  (function(){
+    const $=id=>document.getElementById(id);
+    if(!$('i_ag'))return;
+    const inputs=['ag','seats','ops','tok','client','or','node','tps','amort','opex','util','sell','fix'];
+    const SEC_MONTH=30.4*24*3600;
+    const fmt=(n,d=0)=>isFinite(n)?n.toLocaleString('ru-RU',{maximumFractionDigits:d}):'—';
+    const money=(n,d=0)=>'$'+fmt(n,d);
+    const big=n=>n>=1e9?fmt(n/1e9,1)+' млрд':n>=1e6?fmt(n/1e6,1)+' млн':n>=1e3?fmt(n/1e3,0)+' тыс':fmt(n);
+    const marginCell=m=>`<span class="${m>=0.7?'g':(m>=0.4?'':'r')}">${fmt(m*100,1)}%</span>`;
+    const profitCell=p=>`<span class="${p>=0?'g':'r'}">${money(p)}</span>`;
+
+    function calc(){
+      const ag=+$('i_ag').value, seats=+$('i_seats').value, ops=+$('i_ops').value,
+            tokK=+$('i_tok').value, client=+$('i_client').value/100,
+            orPrice=+$('i_or').value,
+            nodeK=+$('i_node').value, tps=+$('i_tps').value, amort=+$('i_amort').value,
+            opex=+$('i_opex').value, util=+$('i_util').value/100,
+            sell=+$('i_sell').value, fix=+$('i_fix').value;
+
+      $('v_ag').textContent=fmt(ag); $('v_seats').textContent=fmt(seats);
+      $('v_ops').textContent=fmt(ops); $('v_tok').textContent=fmt(tokK)+'K';
+      $('v_client').textContent='+'+fmt(client*100)+'%';
+      $('v_or').textContent='$'+orPrice.toFixed(2);
+      $('v_node').textContent='$'+fmt(nodeK)+'K'; $('v_tps').textContent=fmt(tps);
+      $('v_amort').textContent=fmt(amort); $('v_opex').textContent='$'+fmt(opex);
+      $('v_util').textContent=fmt(util*100)+'%';
+      $('v_sell').textContent='$'+sell.toFixed(2); $('v_fix').textContent='$'+fmt(fix);
+
+      const tokMonth=ag*seats*ops*30.4*tokK*1000*(1+client);
+      const tokM=tokMonth/1e6;
+      const revTok=tokM*sell;
+      const revAll=revTok+ag*fix;
+
+      const orMonth=tokM*orPrice;
+      const orMargin=sell>0?(1-orPrice/sell):0;
+
+      const nodeCapacity=tps*util*SEC_MONTH;
+      const nodes=Math.max(1,Math.ceil(tokMonth/nodeCapacity));
+      const nodeMonthly=(nodeK*1000)/amort+opex;
+      const ownMonth=nodes*nodeMonthly;
+      const ownCostPerM=ownMonth/tokM;
+      const ownMargin=sell>0?(1-ownCostPerM/sell):0;
+
+      $('o_tokens').textContent=big(tokMonth);
+      $('o_revtok').textContent=money(revTok);
+      $('o_revall').textContent=money(revAll);
+      $('p_arr').textContent=money(revAll*12);
+
+      $('c_or_cost').textContent='$'+orPrice.toFixed(2);
+      $('c_own_cost').textContent='$'+ownCostPerM.toFixed(2);
+      $('c_or_month').textContent=money(orMonth);
+      $('c_own_month').textContent=money(ownMonth);
+      $('c_nodes').textContent=fmt(nodes);
+      $('c_or_margin').innerHTML=marginCell(orMargin);
+      $('c_own_margin').innerHTML=marginCell(ownMargin);
+      $('c_or_profit').innerHTML=profitCell(revTok-orMonth);
+      $('c_own_profit').innerHTML=profitCell(revTok-ownMonth);
+
+      const tokPerAg=seats*ops*30.4*tokK*1000*(1+client);
+      let be=null;
+      for(let n=5;n<=5000;n+=5){
+        const tm=n*tokPerAg;
+        const nd=Math.max(1,Math.ceil(tm/nodeCapacity));
+        if(nd*nodeMonthly < tm/1e6*orPrice){be=n;break;}
+      }
+      let v='';
+      if(ownMonth<orMonth){
+        v=`При текущих параметрах <b>свой инференс уже дешевле</b>: ${money(ownMonth)}/мес против ${money(orMonth)}/мес у OpenRouter (${fmt(nodes)} узлов, экономия ${money(orMonth-ownMonth)}/мес). `;
+      }else{
+        v=`При текущих параметрах <b>выгоднее OpenRouter</b>: ${money(orMonth)}/мес против ${money(ownMonth)}/мес на своём железе. `;
+      }
+      v+=be?`Точка перехода на своё железо — примерно <b>${fmt(be)} агентств</b>.`:`Свой инференс не окупается до 5000 агентств — меняйте производительность узла, загрузку или закупочную цену.`;
+      $('verdict').innerHTML=v;
+
+      const bestCost=Math.min(orMonth,ownMonth);
+      $('p_arpu').textContent=money(revAll/ag,0);
+      $('p_pool').textContent=money(revTok/ag,0)+' ('+fmt(revTok/revAll*100)+'%)';
+      $('p_margin').textContent=fmt((1-bestCost/revAll)*100,1)+'%';
+    }
+    inputs.forEach(k=>$('i_'+k).addEventListener('input',calc));
+    calc();
+  })();
 </script>
 </body>
 </html>
