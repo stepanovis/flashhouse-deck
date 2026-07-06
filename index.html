@@ -493,10 +493,20 @@
     if(e.key==='Home'){e.preventDefault();goTo(0)}
     if(e.key==='End'){e.preventDefault();goTo(N-1)}
   });
-  const obs=new IntersectionObserver(es=>{
-    es.forEach(en=>{if(en.isIntersecting)cur=slides.indexOf(en.target)});
-  },{threshold:.55});
-  slides.forEach(s=>obs.observe(s));
+  let ticking=false;
+  function updateCurFromScroll(){
+    ticking=false;
+    let best=0,bestDist=Infinity;
+    slides.forEach((s,i)=>{
+      const d=Math.abs(s.getBoundingClientRect().top);
+      if(d<bestDist){bestDist=d;best=i}
+    });
+    cur=best;
+  }
+  document.addEventListener('scroll',()=>{
+    if(!ticking){ticking=true;requestAnimationFrame(updateCurFromScroll)}
+  },{passive:true});
+  updateCurFromScroll();
 </script>
 </body>
 </html>
