@@ -1,5 +1,5 @@
-# FlashHouse — Investment Deck
+# FlashHouse — AI-Native CRM for Real Estate
 
-Инвестиционная дека FlashHouse: генеративный чат-интерфейс для слаборазвитых ниш (якорная вертикаль — недвижимость).
+Инвестиционная дека FlashHouse: AI-native CRM для агентств недвижимости, Brazil-first, с дорожной картой CRM → network → REIT-фонд.
 
 Live: https://stepanovis.github.io/flashhouse-deck/

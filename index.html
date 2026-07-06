@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FlashHouse — Investment Deck</title>
+<title>FlashHouse — AI-Native CRM for Real Estate</title>
 <style>
   :root{
     --bg:#ffffff;
@@ -35,7 +35,6 @@
     padding:110px clamp(24px,7vw,120px) 70px;
     position:relative;
   }
-  /* top chrome: brand + progress + section */
   .chrome{
     position:absolute;
     top:0;left:0;right:0;
@@ -175,30 +174,6 @@
     padding:6px 12px;border-radius:8px;z-index:20;
   }
   @media(max-width:820px){.nav-hint{display:none}}
-  /* calculator */
-  .calc-grid{display:grid;grid-template-columns:330px 1fr;gap:22px;margin-top:36px;align-items:start}
-  @media(max-width:960px){.calc-grid{grid-template-columns:1fr}}
-  .calc-box{background:var(--card);border-radius:14px;padding:22px 24px}
-  .cfield{margin-bottom:13px}
-  .cfield label{display:flex;justify-content:space-between;font-size:13px;color:var(--dim);margin-bottom:3px}
-  .cfield label .val{font-family:var(--mono);color:var(--blue-dark);font-weight:700}
-  .cfield input[type=range]{width:100%;accent-color:var(--blue)}
-  .csect{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-dark);margin:16px 0 10px;padding-top:12px;border-top:1px solid var(--border)}
-  .csect:first-child{margin-top:0;padding-top:0;border-top:none}
-  .cstat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-  .cstat{background:var(--card);border-radius:10px;padding:14px 16px}
-  .cstat .l{font-size:11.5px;color:var(--dim);margin-bottom:2px}
-  .cstat .v{font-family:var(--mono);font-size:19px;font-weight:700}
-  .cstat .v.b{color:var(--blue-dark)}
-  .cstat .v.g{color:var(--green)}
-  table.ct{margin-top:0;font-size:14px}
-  table.ct th{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);text-align:right;border-bottom:2px solid var(--border)}
-  table.ct th:first-child{text-align:left}
-  table.ct td{font-family:var(--mono);font-size:13px;text-align:right;padding:10px 12px}
-  table.ct td:first-child{font-family:inherit;font-size:14px;text-align:left;font-weight:600;color:var(--text)}
-  .g{color:var(--green)} .r{color:var(--red)}
-  .cverdict{border-left:3px solid var(--orange);background:#fdf3ea;border-radius:0 10px 10px 0;padding:14px 18px;margin-top:14px;font-size:14.5px}
-  .cverdict b{color:var(--orange)}
 </style>
 </head>
 <body>
@@ -206,77 +181,206 @@
 
 <!-- 01 · Title -->
 <section class="slide" data-sect="">
-  <h1>Conversational<br><span class="b">real estate</span><br>portals.</h1>
-  <p class="lead" style="margin-top:30px">Every agency gets its own AI storefront and CRM. <span class="b">No IT team required.</span></p>
-  <div class="hero-meta">FlashHouse&ensp;·&ensp;Seed&ensp;·&ensp;2026</div>
-  <div class="hero-sign">Built on the Keepstar generative-UI engine — live in production.</div>
+  <h1>The AI-native<br><span class="b">CRM</span><br>for real estate.</h1>
+  <p class="lead" style="margin-top:30px">Every agency runs on one system that thinks, sells and closes for it. <span class="b">No IT team required.</span></p>
+  <div class="hero-meta">FlashHouse&ensp;·&ensp;CRM-first&ensp;·&ensp;2026</div>
+  <div class="hero-sign">Wave one: markets with heavy bureaucracy and no automation — starting with Brazil.</div>
 </section>
 
 <!-- 02 · Problem -->
 <section class="slide" data-sect="Problem">
-  <h2>Portals own the traffic.<br><span class="b">Agencies own nothing.</span></h2>
+  <h2>The agency already runs<br>full-cycle. <span class="b">By hand.</span></h2>
   <div class="cols c3">
     <div class="col">
-      <h3>Buyers <span class="b">drown</span><br>in filters.</h3>
-      <p>A buyer wants to say "two-bed near the metro, dog-friendly, under $600". Instead: checkboxes, tabs, hundreds of identical cards.</p>
+      <h3>The full cycle <span class="b">already works.</span></h3>
+      <p>In mature bureaucratic markets, the agency is the trusted intermediary end to end — a tenant can rent, or a buyer can close, without ever meeting the other side. That's not chaos. That's a real, valuable service.</p>
     </div>
     <div class="col">
-      <h3>Agencies <span class="b">rent</span><br>someone else's shopfront.</h3>
-      <p>Listing portals sell agencies their own leads back. The portal keeps the client, the data, and the margin.</p>
+      <h3>It's just <span class="b">done by hand.</span></h3>
+      <p>Calls, photos, listings, showings, filings, disclosures — every one of those steps is manual, redone at every handoff, owned by no single system.</p>
     </div>
     <div class="col">
-      <h3>No IT team.<br><span class="b">No way out.</span></h3>
-      <p>A real portal of your own takes a permanent dev team. A 5-agent agency will never afford one.</p>
+      <h3>Owners <span class="b">fly blind.</span></h3>
+      <p>No real-time view of the pipeline, no analytics, no way to manage the business — only the people inside it.</p>
     </div>
   </div>
-  <p class="foot">Every market has its incumbent shopfront-portal: Cian, DomClick, Avito and their local clones. Static listings, paid placement, zero ownership for the agency.</p>
+  <p class="foot">Result: a service worth paying for, delivered at manual cost — high price per deal, long cycles, delays at every handoff, errors that compound.</p>
 </section>
 
 <!-- 03 · Solution -->
 <section class="slide" data-sect="Solution">
-  <h2>FlashHouse talks. FlashHouse shows.<br><span class="b">Buyers book viewings.</span></h2>
+  <h2>Not automation <span class="b">bolted on.</span><br>Process <span class="b">built for AI</span> first.</h2>
+  <p class="lead">Every operation the agency runs — search, listing, showing, follow-up — is designed around an AI agent and a clean UI from day one, not a human workflow with software glued on top.</p>
+  <div class="cols c2" style="margin-top:40px">
+    <div class="card">
+      <span class="tag">Driven to zero</span>
+      <p>Cost per deal, time to close, handoff delays, error rate.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Driven to max</span>
+      <p>Conversion, client access, and how easy it is to see and manage the whole business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · Product -->
+<section class="slide" data-sect="Product">
+  <h2>Three interfaces.<br><span class="b">One deal cycle.</span></h2>
+  <div class="flow3">
+    <div class="step">
+      <div class="n">01 · Concierge showcase</div>
+      <h3>Buyers get a dialogue,<br>not a filter form</h3>
+      <p>Clients explore listings and the space around them in conversation with a concierge AI, then book a viewing — no agent, no call, no form.</p>
+    </div>
+    <div class="step">
+      <div class="n">02 · Field agent</div>
+      <h3>The listing goes live<br>before the agent leaves</h3>
+      <p>On the first visit to the owner, the listing is captured, enhanced and published to the agency's base and to clients — before the agent is off the property.</p>
+    </div>
+    <div class="step">
+      <div class="n">03 · CRM core</div>
+      <h3>Run the agency<br>from outside, by chat</h3>
+      <p>Managed through Claude Code from outside the app. Generated analytics and dashboards, one data store, map-based analysis and unstructured data collection about the property and its surroundings.</p>
+    </div>
+  </div>
+  <p class="foot">Three interfaces close the loop from first contact to closed deal — and every step feeds the same data store.</p>
+</section>
+
+<!-- 05 · How it works -->
+<section class="slide" data-sect="How it works">
+  <h2>Ask. See. Refine.<br><span class="b">Visit.</span></h2>
   <div class="loop">
     <span class="w">ASK</span><span class="a">→</span>
     <span class="w">SEE</span><span class="a">→</span>
     <span class="w">REFINE</span><span class="a">→</span>
     <span class="w" style="color:var(--blue)">VISIT</span>
   </div>
-  <p class="loop-cap">Loop until the right home is clear — <span class="b">then a viewing appointment</span></p>
-  <ul class="list" style="margin-top:44px">
-    <li><b>An agency's own AI portal</b> <span class="d">— chat-based search, generative UI, under the agency's brand and domain.</span></li>
-    <li><b>CRM inside</b> <span class="d">— listings, clients, deals. Zero-onboarding, no integrators.</span></li>
-    <li><b>Decentralized by design</b> <span class="d">— each agency owns its channel, clients and data.</span></li>
-    <li><b>Shared listings pool, opt-in</b> <span class="d">— network effect without giving up independence.</span></li>
-  </ul>
+  <p class="loop-cap">Loop until the right home is clear — <span class="b">then a viewing, booked with no human in the loop.</span></p>
 </section>
 
-<!-- 04 · Product -->
-<section class="slide" data-sect="Product">
-  <h2>List in minutes. Manage by chat.<br><span class="b">Sell 24/7.</span></h2>
-  <div class="flow3">
-    <div class="step">
-      <div class="n">01 · Field agent</div>
-      <h3>Listing goes live<br>before the handshake ends</h3>
-      <p>The agent shoots photos at the viewing. The system enhances them, writes the listing, analyzes the neighborhood from map data — published before the agent leaves the apartment.</p>
+<!-- 06 · Market -->
+<section class="slide" data-sect="Market">
+  <h2>Licensed agents.<br><span class="b">No captive monopoly.</span></h2>
+  <p class="lead">Two screens filter every market before we touch it: agents carry real accountability for the deal, and no single capitalized portal already owns their traffic.</p>
+  <div class="cols c3" style="margin-top:34px">
+    <div class="card">
+      <span class="tag">TAM · global ceiling</span>
+      <p><b>$3.8–4.7B/yr</b> — anchored on published real estate CRM software market sizing (Grand View Research, Business Research Insights, 2025), not our own extrapolation. A bottom-up cross-check using our target profile's agent-per-agency ratio (Brazil, 8.3) lands at ~$2.2B; the same math with the US ratio (14.6) or UK (2.1) swings 4-7x — proof that one country's ratio isn't a market-sizing method, only a sanity check.</p>
     </div>
-    <div class="step">
-      <div class="n">02 · Office</div>
-      <h3>The whole agency,<br>run by conversation</h3>
-      <p>Owners manage listings, people and pipeline by chat. No dashboards to learn — the office talks to its own system.</p>
+    <div class="card">
+      <span class="tag">SAM · our target profile</span>
+      <p><b>~$310M/yr</b> bottom-up across 5 markets: Brazil (70K agencies), Mexico (17K), Argentina (~4K), Morocco (~1.3K), Peru (~11K, estimated — see below). Grows further as Vietnam gets a confirmed count.</p>
     </div>
-    <div class="step">
-      <div class="n">03 · Buyer</div>
-      <h3>A sales line<br>that never sleeps</h3>
-      <p>Buyers explore the catalog in dialogue, match homes to their needs, and get walked to a viewing appointment. First-line sales, always on.</p>
+    <div class="card">
+      <span class="tag">SOM · 18-month target</span>
+      <p><b>$300K-900K ARR</b> — 100-300 paying agencies in Brazil, funded by this round's Tranche 1. In line with 3 agencies committed (verbally) today and a realistic dozen within reach.</p>
     </div>
   </div>
-  <p class="foot">Three interfaces close the full deal cycle — and every step generates data that strengthens the rest.</p>
+  <div class="panel" style="border-left:3px solid var(--blue);margin-top:30px">
+    <p style="font-family:var(--mono);font-size:clamp(14px,1.5vw,18px)">SAM = 70,000 (BR) + 17,049 (MX) + ~3,800 (AR) + ~1,318 (MA) + ~11,000 (PE, est.) = ~103,200 agencies × $250/mo ARPU × 12 ≈ <span class="b">$310M</span></p>
+    <p style="margin-top:8px;font-size:14px">Peru's count isn't sourced directly — no public INDECOPI/ministry total exists — it's Brazil's agencies-per-capita ratio applied to Peru's population, a proxy pending real field data. ARPU is a placeholder from FlashHouse's base assumptions, not yet measured on a signed contract anywhere.</p>
+  </div>
+  <ul class="list" style="margin-top:30px">
+    <li><b>The screen</b> <span class="d">— licensed agents with real liability for the deal (not an unaccountable pass-through); fragmented SMB agencies, not one dominant chain; enough transaction volume to matter; and no captive monopoly — a market where a single capitalized portal already owns agent traffic is a dead end, however big the paperwork.</span></li>
+    <li><b>Wave one</b> <span class="d">— Brazil. Discovery is already portal-owned (QuintoAndar, VivaReal/ZAP) but the agency layer is independent and thriving — exactly the pattern we displace, one agency at a time. Political risk: October 2026 general elections and fiscal instability are real (Eurasia Group, Allianz Trade, Deloitte) — but a CRM sold on agency operating cost is far less exposed to that cycle than a developer or a fund would be; a slower market makes efficiency tools more necessary, not less.</span></li>
+    <li><b>Wave two — Peru first</b> <span class="d">— of the shortlist (Peru, Mexico, Argentina, Morocco, Vietnam), Peru leads: similar mentality and sales approach to Brazil, Spanish/Portuguese-adjacent, and — unlike Mexico (QuintoAndar already present) — no dominant funded incumbent yet. Mexico and Argentina follow (notary-mediated, but state-by-state licensing / macro risk respectively); Morocco and Vietnam are further out on cultural and operational distance.</span></li>
+    <li><b>Deprioritized</b> <span class="d">— Colombia, Thailand: no real agent licensing, same unaccountable pattern we screen out. Chile: likely already too digitized. Indonesia, Nigeria, Kenya, Philippines: bureaucracy without a mature accountable intermediary.</span></li>
+    <li><b>Why this order</b> <span class="d">— licensed, accountable agents already think in ROI and buy efficiency on the numbers; no education needed to sell to them. Markets with no agent accountability, or captive to one dominant state-linked portal (our reference case: Russia's DomClick/Sber), aren't closed forever — just sequenced after outside proof lands elsewhere, when the sale gets easier there too.</span></li>
+  </ul>
+  <p class="foot">Brazil: COFECI 2024 via CRECISP / Imobi Report / Portas.com.br (official regulator). Mexico, Argentina, Morocco: business-directory counts (rentechdigital, 2025-2026) — likely undercounts vs. true universe. Peru: population-ratio estimate, not sourced. Global TAM: NAR estimate of ~4-6M real estate professionals worldwide (no official aggregate exists); CRM market sizing from Grand View Research / Business Research Insights. Full candidate-by-candidate research: wave-two-market-candidates.md.</p>
 </section>
 
-<!-- 05 · Engine -->
+<!-- 06c · GTM -->
+<section class="slide" data-sect="GTM">
+  <h2>Land through partners.<br><span class="b">Grow through the network they build.</span></h2>
+  <p class="lead">Accountable agents already think in ROI — the sale is showing the numbers, not explaining the concept. The goal is fast, aggressive capture, not a cautious crawl: once the model proves out in one city, we don't scale it one city at a time — we go parallel across the key cities at once, because the window (see Why now) doesn't stay open for a slow mover.</p>
+  <div class="flow3" style="margin-top:38px">
+    <div class="step">
+      <div class="n">01 · Design partners</div>
+      <h3>Real reference cases,<br>not a cold pitch</h3>
+      <p>3 agencies committed in Brazil today (verbal, not yet contracted — early and real), more through Vlad's network. Each one becomes a case study with real before/after metrics — conversion, cost per deal, time to close.</p>
+    </div>
+    <div class="step">
+      <div class="n">02 · Realtor associations</div>
+      <h3>Warm intros,<br>not cold outbound</h3>
+      <p>Target SECOVI — a trade association (23 regional chapters), not the licensing regulator CRECI, which we deliberately don't pursue as a commercial partner (it's a regulator, and some regional CRECI/sector bodies have faced antitrust scrutiny). Structure: revenue-share on referred agencies (~10-15% of first-year value) plus event sponsorship, not a big upfront fee. One SECOVI chapter presentation reaches dozens of agencies in a single session — far cheaper per lead than a cold field-sales meeting, and the referral converts warmer.</p>
+    </div>
+    <div class="step">
+      <div class="n">03 · Shared network effect</div>
+      <h3>Whoever shows it first<br>has the edge</h3>
+      <p>In Brazil, the agent who first shows a listing to a buyer holds the claim on that sale — so speed to close is worth real money, and agencies with a shared, faster-moving base outperform ones without it. Buyers still shop around, which is exactly why closing faster matters.</p>
+    </div>
+    <div class="step">
+      <div class="n">04 · Field sales</div>
+      <h3>This is a relationship sale.<br>We show up in person</h3>
+      <p>Agency owners buy from people they've met, not a landing page. One city first, to prove the motion (~3 reps, ~4 months). Once it holds, roll out in parallel to 9 more key cities — 10 cities × 3 reps, ~30 people — rather than scale one city at a time. Each rep: ~3 demos/day, ~60/month; at 30% meeting→trial (SMB field-sales benchmark) and 20% trial→paying (top of the SMB SaaS range, justified by in-person demos), that's ~3.6 new agencies/month once ramped — before adding SECOVI-warmed leads on top.</p>
+    </div>
+  </div>
+  <ul class="list" style="margin-top:40px">
+    <li><b>Sell metrics, not features</b> <span class="d">— design-partner numbers become the pitch for the next agency: here's what your conversion and cost per deal look like on FlashHouse.</span></li>
+    <li><b>No cold migration</b> <span class="d">— agencies aren't starting from nothing: WhatsApp threads, Excel sheets, whatever they already run on. Onboarding means the AI ingests that mess directly — no manual re-entry — and the agent keeps working in WhatsApp during a parallel-run window instead of learning a new app on day one.</span></li>
+    <li><b>Land on the CRM, expand into the rest</b> <span class="d">— agencies onboard on the core; concierge showcase and field app upsell once the CRM is the system of record.</span></li>
+    <li><b>Sequenced by market, not simultaneous</b> <span class="d">— Tranche 1 proves the motion in Brazil; Tranche 2 repeats it in the Wave two shortlist with a working playbook instead of a guess.</span></li>
+  </ul>
+  <p class="foot">Traction target: a realistic dozen design partners in Brazil within the design-partner phase, per the team's own estimate — the reference base the association and network motions build on. Field-sales conversion rates (25% / 40%) are our working assumption, not measured yet — the first reps validate or correct them.</p>
+</section>
+
+<!-- 06b · Why now -->
+<section class="slide" data-sect="Why now">
+  <h2>No one's built this<br><span class="b">for this niche yet. That won't last.</span></h2>
+  <ul class="list">
+    <li><b>The gap is specific, not generic</b> <span class="d">— an AI-native storefront and CRM built for licensed, accountable SMB agencies in bureaucratic markets doesn't exist yet. It's an obvious build once someone looks — which is exactly the risk.</span></li>
+    <li><b>Buyer behavior shifted first</b> <span class="d">— conversational shopping is mainstream elsewhere; local real estate portals still run on forms and filters.</span></li>
+    <li><b>Inference got cheap enough</b> <span class="d">— running a concierge AI per listing is now a unit-economics-positive move, not a research project.</span></li>
+    <li><b>The window is narrow</b> <span class="d">— once a funded player or a portal incumbent builds this, the wedge closes. We move on founder-market fit and a live engine now, before it's obvious to everyone else.</span></li>
+  </ul>
+  <p class="foot">The window closes once a local incumbent bolts a chatbot onto its existing portal — a feature, not a rebuild of who owns the client.</p>
+</section>
+
+<!-- 07 · Business model -->
+<section class="slide" data-sect="Business model">
+  <h2>Subscription plus tokens.<br><span class="b">Costs we control.</span></h2>
+  <div class="cols c2" style="margin-top:40px">
+    <div class="card">
+      <span class="tag">Revenue · fix + usage</span>
+      <h3>SaaS fee + token pool</h3>
+      <p>A flat platform fee plus an included AI-token pool. Overage billed on top — usage growth is revenue growth.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Cost · two modes</span>
+      <h3>OpenRouter → own inference</h3>
+      <p>Start with zero CAPEX reselling tokens via aggregators. At scale, switch to local inference on optimized small models — unit cost drops, margin grows.</p>
+    </div>
+  </div>
+  <p class="foot">Detailed unit economics and the live calculator live in the main FlashHouse deck — same assumptions apply here.</p>
+</section>
+
+<!-- 08 · Roadmap -->
+<section class="slide" data-sect="Roadmap">
+  <h2>CRM first.<br><span class="b">Network. Then a fund.</span></h2>
+  <div class="cols c3" style="margin-top:42px">
+    <div class="card">
+      <span class="tag">Phase 1 · now</span>
+      <p>Best-in-class CRM for a single agency — concierge showcase, field app, CRM core.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Phase 2 · network</span>
+      <p>A shared listings network with cross-agency suggestions that close deals faster. An AI detector for undervalued property ready to move quickly.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Phase 3 · capital</span>
+      <p>We buy undervalued property directly and resell it through the same agency network. Our own REIT, diversified across geographies.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <p>The sequence is deliberate: <span class="b">own the operational layer first</span>, then the marketplace it creates, then the capital it can deploy.</p>
+  </div>
+</section>
+
+<!-- 09 · Engine -->
 <section class="slide" data-sect="Engine">
   <h2>Not a wrapper.<br><span class="b">A live engine.</span></h2>
-  <p class="lead">Under the hood — <a href="https://keepstar.one/" target="_blank" rel="noopener">Keepstar</a>: a generative-UI platform our CTO built and runs in production.</p>
+  <p class="lead">Under the hood — <a href="https://keepstar.one/" target="_blank" rel="noopener">Keepstar</a>: a generative-UI platform our CTO built and runs in production. This isn't a concept deck for unbuilt technology.</p>
   <div class="cols c3" style="margin-top:38px">
     <div class="card">
       <span class="tag">Deterministic binding</span>
@@ -294,198 +398,81 @@
   <div class="stats">
     <div class="stat"><div class="v b">Live</div><div class="l">in production today — not a prototype</div></div>
     <div class="stat"><div class="v">2–4s</div><div class="l">response on a hot cache</div></div>
-    <div class="stat"><div class="v b">$0</div><div class="l">LLM cost for clicks, filters, navigation — deterministic and free</div></div>
   </div>
-  <p class="foot">The LLM is paid only for a new meaningful query. Session cost = number of real questions, not number of touches.</p>
-</section>
-
-<!-- 06 · Why now -->
-<section class="slide" data-sect="Why now">
-  <h2>Buyers already shop by chat.<br><span class="b">Real estate hasn't noticed.</span></h2>
-  <div class="stats" style="margin-top:46px">
-    <div class="stat"><div class="v">300M+</div><div class="l">shoppers on Amazon Rufus — conversational buying is mainstream*</div></div>
-    <div class="stat"><div class="v b">$195M+</div><div class="l">raised by generative-storefront startups — all fighting for e-commerce</div></div>
-    <div class="stat"><div class="v">0</div><div class="l">players bringing generative storefronts to real estate agencies</div></div>
-  </div>
-  <ul class="list" style="margin-top:48px">
-    <li><b>Incumbent portals feel it</b> <span class="d">— Plus Group shipped AI bots for Cian, Avito and DomClick; Redfin launched chat search. But a bot on top of a shopfront is still a shopfront.</span></li>
-    <li><b>They can't follow us</b> <span class="d">— giving each agency its own portal destroys the centralized-portal business. Their model is our moat.</span></li>
-  </ul>
-  <p class="foot">* 2025, Amazon-official. Borrowed category signal — not a FlashHouse metric. Funding: Swap Commerce ~$149M, Alokai ~$39M, Kepler $4.5M, Thesys $4M — public reporting.</p>
-</section>
-
-<!-- 07 · Market -->
-<section class="slide" data-sect="Market">
-  <h2>Sized bottom-up.<br><span class="b">So you can check the math.</span></h2>
-  <p class="lead">We don't quote unverifiable analyst TAMs. Our serviceable market is a formula anyone can audit:</p>
-  <div class="panel" style="border-left:3px solid var(--blue)">
-    <p style="font-family:var(--mono);font-size:clamp(15px,1.7vw,19px)">SAM = agencies in target regions × ARPU × 12</p>
-  </div>
-  <ul class="list">
-    <li><b>Target segment</b> <span class="d">— small & mid agencies (3–10 agents) with no IT team: the largest and most underserved layer of the market.</span></li>
-    <li><b>Wave one</b> <span class="d">— markets with weak agency IT and a dominant shopfront-portal: Russia, CIS, Eastern Europe; then LatAm and SEA.</span></li>
-    <li><b>Structural tailwind</b> <span class="d">— vertical SaaS spends 17% of revenue on S&M vs 34% for horizontal. Focus makes growth twice as cheap.</span></li>
-  </ul>
-  <p class="foot">Agency density per region is being counted in the field — that's a funded milestone, not a footnote we outsource to a paid report.</p>
-</section>
-
-<!-- 08 · Wedge -->
-<section class="slide" data-sect="Wedge">
-  <h2>CRM is the beachhead.<br><span class="b">Proven, not guessed.</span></h2>
-  <div class="quote">
-    Control points like CRM show the highest attach rate for cross-selling additional modules in SMB.
-    <span class="src">Tidemark 2024 Vertical SMB SaaS Benchmark — primary survey of ~250 operators. The one claim that survived our 3-0 adversarial verification.</span>
-  </div>
-  <ul class="list" style="margin-top:40px">
-    <li><b>The pattern is market-tested</b> <span class="d">— Toast displaced NCR/Oracle in restaurant POS; ServiceTitan did it in home services. Owning the operational layer is an unfair right to sell every next module.</span></li>
-    <li><b>Our sequence</b> <span class="d">— agency CRM as the beachhead → AI portal as the differentiator → tokens and modules as expanding revenue.</span></li>
-  </ul>
-</section>
-
-<!-- 09 · Business model -->
-<section class="slide" data-sect="Business model">
-  <h2>Subscription plus tokens.<br><span class="b">Costs we control.</span></h2>
-  <div class="cols c2" style="margin-top:40px">
-    <div class="card">
-      <span class="tag">Revenue · fix + usage</span>
-      <h3>SaaS fee + token pool</h3>
-      <p>A flat platform fee (portal, CRM, listings base) plus an included AI-token pool. Overage is billed on top — usage growth is revenue growth. The dominant AI-SaaS pricing standard: 85% of SaaS uses usage-based elements, 61% run hybrid.</p>
-    </div>
-    <div class="card">
-      <span class="tag">Cost · two modes</span>
-      <h3>OpenRouter → own inference</h3>
-      <p>Start with zero CAPEX reselling tokens via aggregators. At scale, switch to local inference on optimized small models — unit cost drops multiples. Models get cheaper every year; our margin grows on both sides.</p>
-    </div>
-  </div>
-  <div class="stats">
-    <div class="stat"><div class="v b">~$250</div><div class="l">target monthly bill per agency (fee + tokens), design-partner pricing to be validated</div></div>
-    <div class="stat"><div class="v">3:1</div><div class="l">target LTV:CAC — healthy SMB SaaS benchmark</div></div>
-    <div class="stat"><div class="v b">2×</div><div class="l">cheaper growth: vertical SaaS S&M at 17% of revenue vs 34% horizontal</div></div>
+  <div class="panel" style="margin-top:32px">
+    <p><b>One company, one engine.</b> Keepstar is folding into this project — the team's own call, made because they see more potential here than running it as a separate product. No separate entity, no licensing question, no vendor dependency to underwrite.</p>
   </div>
 </section>
 
-<!-- 10 · Economics -->
-<section class="slide" data-sect="Economics">
-  <h2>The economics,<br><span class="b">live.</span></h2>
-  <p class="sub">Five levers an investor cares about — everything technical is fixed in the base assumptions below. Drag and see margin, ARR and the break-even point for our own inference.</p>
-  <div class="calc-grid">
-    <div class="calc-box">
-      <div class="csect">Scale</div>
-      <div class="cfield"><label>Paying agencies <span class="val" id="v_ag"></span></label><input type="range" id="i_ag" min="5" max="2000" step="5" value="100"></div>
-      <div class="cfield"><label>AI usage intensity <span class="val" id="v_use"></span></label><input type="range" id="i_use" min="50" max="300" step="10" value="100"></div>
-      <div class="csect">Cost</div>
-      <div class="cfield"><label>Token buy price (OpenRouter), $/1M <span class="val" id="v_or"></span></label><input type="range" id="i_or" min="0.1" max="5" step="0.05" value="0.6"></div>
-      <div class="csect">Pricing</div>
-      <div class="cfield"><label>Token sell price, $/1M <span class="val" id="v_sell"></span></label><input type="range" id="i_sell" min="0.5" max="20" step="0.25" value="4"></div>
-      <div class="cfield"><label>SaaS fee, $/mo per agency <span class="val" id="v_fix"></span></label><input type="range" id="i_fix" min="0" max="500" step="10" value="150"></div>
-    </div>
-    <div>
-      <div class="cstat-row">
-        <div class="cstat"><div class="l">Tokens / month</div><div class="v" id="o_tokens"></div></div>
-        <div class="cstat"><div class="l">Token revenue / mo</div><div class="v b" id="o_revtok"></div></div>
-        <div class="cstat"><div class="l">Total revenue / mo</div><div class="v b" id="o_revall"></div></div>
-        <div class="cstat"><div class="l">ARR</div><div class="v b" id="p_arr"></div></div>
-      </div>
-      <div class="calc-box">
-        <div style="overflow-x:auto">
-        <table class="ct">
-          <tr><th>Metric</th><th>OpenRouter</th><th>Own inference</th></tr>
-          <tr><td>Cost, $/1M tokens</td><td id="c_or_cost"></td><td id="c_own_cost"></td></tr>
-          <tr><td>Inference spend, $/mo</td><td id="c_or_month"></td><td id="c_own_month"></td></tr>
-          <tr><td>Token margin</td><td id="c_or_margin"></td><td id="c_own_margin"></td></tr>
-          <tr><td>Token profit, $/mo</td><td id="c_or_profit"></td><td id="c_own_profit"></td></tr>
-        </table>
-        </div>
-        <div class="cverdict" id="verdict"></div>
-      </div>
-      <div class="cstat-row" style="margin-top:14px">
-        <div class="cstat"><div class="l">Avg bill per agency / mo</div><div class="v" id="p_arpu"></div></div>
-        <div class="cstat"><div class="l">…of which token pool</div><div class="v" id="p_pool"></div></div>
-        <div class="cstat"><div class="l">Gross margin of the bill</div><div class="v g" id="p_margin"></div></div>
-      </div>
-      <p class="foot" style="margin-top:12px">Base assumptions (100% intensity): 5 agents per agency, ~30 AI ops per agent per day, ~8K tokens per op, buyer chat doubles volume. Own inference: $12K node over 36 months, $150/mo opex, 600 tok/s at 30% utilization. No redundancy or DevOps included — plan 20–30% headroom.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 11 · Moat -->
+<!-- 10 · Moat -->
 <section class="slide" data-sect="Moat">
-  <h2>The tech copies in six months.<br><span class="b">The data never does.</span></h2>
+  <h2>The tech copies.<br><span class="b">Data before publication doesn't.</span></h2>
   <div class="cols c3" style="margin-top:42px">
     <div class="card">
       <span class="tag">01 · Niche data</span>
-      <p>Live listings, prices and closed deals collected through the agency network — market truth no portal has. It works three times: product for buyers, visibility in LLM search (GEO), and fuel for the valuation engine.</p>
+      <p>Every listing and deal captured at the moment of creation — before it ever reaches a portal.</p>
     </div>
     <div class="card">
-      <span class="tag">02 · Module speed</span>
-      <p>Data–LLM–Front architecture ships new modules and whole verticals faster than a competitor can copy the previous one. The moat is tempo, not code.</p>
+      <span class="tag">02 · Network effect</span>
+      <p>A shared base across agencies gets stronger and faster with every agency that joins.</p>
     </div>
     <div class="card">
-      <span class="tag">03 · Tech head start</span>
-      <p>Deterministic binding and addressable edits — architecture nobody in generative UI has shipped. And the few players there are don't know how to enter verticals.</p>
+      <span class="tag">03 · Engine as insurance</span>
+      <p>Built on a live generative-UI engine. If the wedge stalls, the same engine repoints at the next niche at a fraction of the cost.</p>
     </div>
   </div>
-  <div class="panel">
-    <p><span class="b">The window:</span> the first player to own a niche's data and its SMB CRM layer closes that niche behind them. We intend to close real estate in wave-one regions before a second player shows up.</p>
+  <div class="panel" style="border-left:3px solid var(--orange);margin-top:38px">
+    <p><span style="color:var(--orange);font-weight:700">On QuintoAndar specifically:</span> in 2023–2024 QuintoAndar itself pivoted away from displacing agencies — its "marketplace of marketplaces" model now partners with them, and reportedly doubled partner-agency sales. That validates our core bet: even the best-funded portal in the region concluded agencies are worth keeping, not replacing. We aren't picking a fight over portal traffic — FlashHouse is the layer agencies run their <i>own</i> pipeline on (direct referrals, WhatsApp, repeat clients), independent of any one portal's terms. Portals stay a demand channel; they don't become the reason to avoid buying us.</p>
+  </div>
+  <div class="panel" style="border-left:3px solid var(--red);margin-top:20px">
+    <p><span style="color:var(--red);font-weight:700">The real competitive risk is Loft, not QuintoAndar.</span> Loft ($2.2B valuation, $798M raised) has already pivoted from iBuying into exactly our layer: a B2B SaaS + fintech platform for ~7,000 partner agencies, with an AI agent layer live in production for lead qualification, lead management and pricing, plus a broker-facing CRM — and R$100M (~$19M) earmarked for 2026 to deepen it further. This is the single biggest thing to get right in the pitch, not paper over: Loft is agency-tooling-first and fintech-monetized (rent guarantees, mortgage origination fund most of its revenue); FlashHouse is concierge-first and conversational — the AI-native buyer storefront and the field-capture app aren't in Loft's public feature set, and Loft's 7,000 partners skew toward agencies willing to plug into its financial products, not the long tail of independent 3-10 agent shops we target. This needs a real strategic answer, not just a deck line — flagging for a direct conversation, not resolving it here.</p>
   </div>
 </section>
 
-<!-- 12 · Beyond -->
-<section class="slide" data-sect="Beyond">
-  <h2>Real estate is the polygon.<br><span class="b">The playbook repeats.</span></h2>
-  <p class="lead">The engine de-risks the vertical: if wave one stalls, the same engine opens the next niche at a fraction of the cost. <span class="b">A plan B that doesn't break plan A.</span></p>
-  <p class="sub">Next vertical criteria: fragmented SMB base + a dominant aggregator + low SaaS penetration.</p>
-  <div style="margin-top:26px">
-    <span class="pill">Autos</span><span class="pill">Medical clinics</span><span class="pill">Travel</span><span class="pill">Legal services</span><span class="pill">Building materials</span><span class="pill">B2B wholesale</span>
-  </div>
-  <div class="panel" style="border-left:3px solid var(--orange);margin-top:44px">
-    <p><span style="color:var(--orange);font-weight:700">Act 2 — the data is worth more than the subscription.</span> The SaaS network collects real demand, prices and deals — not shopfront prices, market truth. On that layer we build a valuation engine that spots undervalued property before the market does, and investment products on top of it. The team has the competence and the partners in real estate and finance for that step. For a seed investor it's an option, not a promise: the round pays back on SaaS alone.</p>
-  </div>
-</section>
-
-<!-- 13 · Team -->
+<!-- 11 · Team -->
 <section class="slide" data-sect="Team">
   <h2>One built the engine.<br><span class="b">One builds the market.</span></h2>
   <div class="cols c2" style="margin-top:40px">
     <div class="card">
       <span class="tag">Ivan Stepanov · co-founder, CEO</span>
-      <p>Business development and product: strategy, GTM, partnerships and fundraising. Runs operations and the real-estate vertical.</p>
+      <p>Product manager and architect. Launched a biotech startup as product manager. Built two CRM systems across his career — including 4 years (2018-2022) at Skyeng, Eastern Europe's largest online language school (2,000+ teachers, ~45% of Russia's online-language market, $130M Forbes valuation in 2020).</p>
     </div>
     <div class="card">
       <span class="tag">Vladislav Starknight · founder, CTO</span>
-      <p>Built Keepstar solo to a live production engine while category competitors raised $195M+. Real estate runs through his whole career: KPMG on DOM.RF (national developer registry & new-builds catalog), proptech Homeapp (+455% revenue YoY, agent conversion 0.2 → 1.2 deals/mo, built the agency CRM from scratch), his own agency in Bali (~$500K GMV). Before that — automation at Magnit (click-to-eat delivery time −60%), Rosshtrafy (+62% revenue QoQ, −92% support load), AvtoVAZ parts marketplace. MEPhI, cybersecurity.</p>
+      <p>Built Keepstar solo to a live production engine. Real estate runs through his whole career: KPMG on DOM.RF (national developer registry & new-builds catalog), proptech Homeapp (+455% revenue YoY, agent conversion 0.2 → 1.2 deals/mo, built the agency CRM from scratch), his own agency in Bali (~$500K GMV).</p>
     </div>
   </div>
-  <p class="foot">Rare founder-market fit: the CTO has built the market's state infrastructure, the agencies' CRM, and an agency itself — three sides of the same niche. Hiring under the round: engineers to finish the vertical, sales for wave-one regions.</p>
+  <p class="foot">Founder-market fit across three sides of the same niche: state infrastructure, agency CRM, and running an agency itself. Skyeng figures: EWDN/Forbes reporting, 2018–2020 — general public sourcing, to be re-verified before investor use.</p>
 </section>
 
-<!-- 14 · Ask -->
+<!-- 12 · Ask -->
 <section class="slide" data-sect="Ask">
-  <h2>Raising to own the vertical.<br><span class="b">Not to start.</span></h2>
+  <h2>Raising to own<br>the <span class="b">operating layer</span> first.</h2>
   <div class="stats" style="margin-top:44px">
-    <div class="stat"><div class="v b">$1.2M</div><div class="l">seed round</div></div>
-    <div class="stat"><div class="v">$5–8M</div><div class="l">target valuation</div></div>
-    <div class="stat"><div class="v">18 mo</div><div class="l">runway to Series A metrics</div></div>
+    <div class="stat"><div class="v b">$300K</div><div class="l">now — 9 months, product development, Brazil launch</div></div>
+    <div class="stat"><div class="v">$780-880K</div><div class="l">next — 1 city proves it, then 10 cities in parallel (see right)</div></div>
+    <div class="stat"><div class="v">$5-8M</div><div class="l">target valuation — carried over from the main FlashHouse deck, to be confirmed</div></div>
+    <div class="stat"><div class="v">18 mo</div><div class="l">indicative runway to Series A metrics</div></div>
   </div>
   <div class="cols c2" style="margin-top:46px">
     <div class="card">
-      <span class="tag">Months 1–6 · ~$250K</span>
-      <p>Launch sales in region one with a compact team. Design partners onboarded — first are already committed. Majority of spend: marketing and sales, not R&D. Unit economics profitable from the first paying agencies.</p>
+      <span class="tag">Tranche 1 · $300K · 9 months</span>
+      <p><b>Months 1-3</b> — lean team of 4 (CTO + 2 engineers + CEO/product, part-time designer contract) ships the minimal core: the buyer-facing AI concierge first, the thinnest CRM data model behind it. ~$24K/mo — payroll ($20K) + AI-tool tokens per person (~$600/mo for the 3 technical roles, ~$200/mo for CEO/product) + designer contract + hosting.<br><b>Months 4-9</b> — team grows to 5 (adds a full-time designer), pilots with the 3 committed design partners, builds out the field app and full CRM. ~$28K/mo, same per-person token logic. Total ≈ $241K, leaving ~$59K buffer for slippage — not a bare 3-month sprint.</p>
     </div>
     <div class="card">
-      <span class="tag">Months 7–18 · the rest</span>
-      <p>Scale across regions, accumulate the niche dataset, prepare vertical two and the valuation engine, switch to own inference for a step-change in token margin.</p>
+      <span class="tag">Tranche 2 · months 10-18 · $780-880K</span>
+      <p>One city first (~3 reps, ~4 months) to prove the motion — then parallel, not sequential: 10 key cities × 3 reps ≈ 30 people for the remaining ~6 months. Bottom-up: core team continuing (~$254K) + ~30 reps' worth of rep-months (~$329K on PJ contracts, ~$524K if hired CLT — Brazil's employer tax burden roughly doubles cost under CLT) + 2 regional sales managers (~$30K) + marketing/association overhead scaled to 10 regions (~$150K) + 15% buffer ≈ <b>$877K (PJ) to $1.1M (CLT)</b>. On PJ contracts this lands close to the original $800K; on CLT it overshoots — the hiring structure decision (PJ vs. CLT) is the swing factor, not the headline number. Token/inference cost at scale is customer-funded through the SaaS token-pool price, not drawn from the raise.</p>
     </div>
   </div>
   <div class="panel" style="margin-top:44px">
     <p><b>Contact:</b> Ivan Stepanov · <a href="mailto:ivan.stepanov.br@gmail.com">ivan.stepanov.br@gmail.com</a></p>
   </div>
+  <p class="foot">PJ vs. CLT applies only to Brazil-based hires (field sales, regional managers) — the core dev team contracts internationally (ИП-equivalent status), outside Brazilian labor law, so Tranche 1 carries none of that tax burden. Phase 3's REIT and buy-resell structure will be built with thepointlegal (international law & finance) once the CRM business justifies the step — not before.</p>
 </section>
 
 <script>
   const slides=[...document.querySelectorAll('.slide')];
   const N=slides.length;
-  // chrome: brand + segmented progress + section label
   slides.forEach((s,i)=>{
     const chrome=document.createElement('div');
     chrome.className='chrome';
@@ -510,83 +497,6 @@
     es.forEach(en=>{if(en.isIntersecting)cur=slides.indexOf(en.target)});
   },{threshold:.55});
   slides.forEach(s=>obs.observe(s));
-
-  // ── inference economics calculator (investor version) ──
-  (function(){
-    const $=id=>document.getElementById(id);
-    if(!$('i_ag'))return;
-    const inputs=['ag','use','or','sell','fix'];
-    const BASE_TOK_PER_AG=5*30*30.4*8000*2;
-    const SEC_MONTH=30.4*24*3600;
-    const NODE_MONTHLY=12000/36+150;
-    const NODE_CAPACITY=600*0.3*SEC_MONTH;
-    const fmt=(n,d=0)=>isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:d}):'—';
-    const money=(n,d=0)=>'$'+fmt(n,d);
-    const big=n=>n>=1e9?fmt(n/1e9,1)+'B':n>=1e6?fmt(n/1e6,1)+'M':n>=1e3?fmt(n/1e3,0)+'K':fmt(n);
-    const marginCell=m=>`<span class="${m>=0.7?'g':(m>=0.4?'':'r')}">${fmt(m*100,1)}%</span>`;
-    const profitCell=p=>`<span class="${p>=0?'g':'r'}">${money(p)}</span>`;
-
-    function calc(){
-      const ag=+$('i_ag').value, use=+$('i_use').value/100,
-            orPrice=+$('i_or').value,
-            sell=+$('i_sell').value, fix=+$('i_fix').value;
-
-      $('v_ag').textContent=fmt(ag);
-      $('v_use').textContent=fmt(use*100)+'%';
-      $('v_or').textContent='$'+orPrice.toFixed(2);
-      $('v_sell').textContent='$'+sell.toFixed(2); $('v_fix').textContent='$'+fmt(fix);
-
-      const tokPerAg=BASE_TOK_PER_AG*use;
-      const tokMonth=ag*tokPerAg;
-      const tokM=tokMonth/1e6;
-      const revTok=tokM*sell;
-      const revAll=revTok+ag*fix;
-
-      const orMonth=tokM*orPrice;
-      const orMargin=sell>0?(1-orPrice/sell):0;
-
-      const nodes=Math.max(1,Math.ceil(tokMonth/NODE_CAPACITY));
-      const ownMonth=nodes*NODE_MONTHLY;
-      const ownCostPerM=ownMonth/tokM;
-      const ownMargin=sell>0?(1-ownCostPerM/sell):0;
-
-      $('o_tokens').textContent=big(tokMonth);
-      $('o_revtok').textContent=money(revTok);
-      $('o_revall').textContent=money(revAll);
-      $('p_arr').textContent=money(revAll*12);
-
-      $('c_or_cost').textContent='$'+orPrice.toFixed(2);
-      $('c_own_cost').textContent='$'+ownCostPerM.toFixed(2);
-      $('c_or_month').textContent=money(orMonth);
-      $('c_own_month').textContent=money(ownMonth);
-      $('c_or_margin').innerHTML=marginCell(orMargin);
-      $('c_own_margin').innerHTML=marginCell(ownMargin);
-      $('c_or_profit').innerHTML=profitCell(revTok-orMonth);
-      $('c_own_profit').innerHTML=profitCell(revTok-ownMonth);
-
-      let be=null;
-      for(let n=5;n<=5000;n+=5){
-        const tm=n*tokPerAg;
-        const nd=Math.max(1,Math.ceil(tm/NODE_CAPACITY));
-        if(nd*NODE_MONTHLY < tm/1e6*orPrice){be=n;break;}
-      }
-      let v='';
-      if(ownMonth<orMonth){
-        v=`At these settings <b>own inference is already cheaper</b>: ${money(ownMonth)}/mo vs ${money(orMonth)}/mo on OpenRouter (saves ${money(orMonth-ownMonth)}/mo). `;
-      }else{
-        v=`At these settings <b>OpenRouter wins</b>: ${money(orMonth)}/mo vs ${money(ownMonth)}/mo on own hardware. `;
-      }
-      v+=be?`Break-even for own hardware — around <b>${fmt(be)} agencies</b>.`:`Own inference doesn't pay off below 5,000 agencies at this buy price.`;
-      $('verdict').innerHTML=v;
-
-      const bestCost=Math.min(orMonth,ownMonth);
-      $('p_arpu').textContent=money(revAll/ag,0);
-      $('p_pool').textContent=money(revTok/ag,0)+' ('+fmt(revTok/revAll*100)+'%)';
-      $('p_margin').textContent=fmt((1-bestCost/revAll)*100,1)+'%';
-    }
-    inputs.forEach(k=>$('i_'+k).addEventListener('input',calc));
-    calc();
-  })();
 </script>
 </body>
 </html>
