@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FlashHouse — Unit Economics</title>
+<style>
+  :root{
+    --blue:#5BA4D9; --ink:#1a2430; --muted:#66788c; --line:#dfe6ee;
+    --bg:#f7fafc; --card:#fff; --good:#1e9e6a; --warn:#d99a1f; --bad:#d94f4f;
+    --pay:#fdf3d7; --sum:#eef4fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:48px 32px;line-height:1.5;max-width:960px;margin:0 auto}
+  h1{font-size:24px;letter-spacing:-.02em}
+  .tag{color:var(--muted);font-size:13px;margin-top:4px}
+  h2{font-size:16px;margin:36px 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:2px 0 14px;font-size:13.5px}
+  .sub b{color:var(--ink)}
+  .tblwrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;font-size:12.5px;width:100%}
+  th,td{border:1px solid var(--line);padding:7px 8px;text-align:right;white-space:nowrap}
+  th{font-weight:600;text-align:center;font-size:12px}
+  th small{display:block;font-weight:400;color:var(--muted);font-size:10.5px}
+  td.name{text-align:left;font-weight:600}
+  td.c{text-align:center}
+  .pos{color:var(--good);font-weight:700} .neg{color:var(--bad);font-weight:700} .mid{color:var(--warn);font-weight:700}
+  .big{font-size:15px;font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:14px;font-size:13.5px}
+  .card.accent{border-left:3px solid var(--blue)}
+  .card h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:8px}
+  .card li{margin:5px 0 5px 18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .traj{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+  @media(max-width:720px){.traj{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .kpi .v{font-size:18px;font-weight:700}
+  .kpi .l{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.3}
+  .kpi.hl{border-color:var(--blue);border-width:2px}
+  .foot{color:var(--muted);font-size:12px;margin-top:28px}
+</style>
+</head>
+<body>
+  <h1>FlashHouse — Unit Economics</h1>
+  <div class="tag">Pre-seed · July 2026 · The unit: one paying agency · Hypotheses marked explicitly — this round exists to turn them into measured numbers</div>
+
+  <h2>1 · Unit economics</h2>
+  <div class="sub">Subscription SaaS, flat <b>$300/mo per agency</b>, AI-token pool included in the price.</div>
+  <div class="tblwrap">
+  <table>
+    <thead><tr>
+      <th>Scenario</th>
+      <th>Price<small>$/mo per agency</small></th>
+      <th>Cost to serve<small>AI tokens + infra</small></th>
+      <th>Gross margin</th>
+      <th>Churn<small>monthly</small></th>
+      <th>Lifetime<small>months</small></th>
+      <th>LTV<small>lifetime gross profit</small></th>
+      <th>CAC<small>salaried bizdev</small></th>
+      <th>LTV : CAC</th>
+      <th>CAC payback</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="name">Base</td>
+        <td>$300</td><td>$90</td><td>70%</td><td>3%</td><td>33</td>
+        <td class="big">$6,930</td><td>$800</td>
+        <td class="big pos">8.7×</td><td class="pos">3.8 mo</td>
+      </tr>
+      <tr>
+        <td class="name">Conservative</td>
+        <td>$300</td><td>$135</td><td>55%</td><td>5%</td><td>20</td>
+        <td>$3,300</td><td>$800</td>
+        <td class="pos">4.1×</td><td class="pos">4.8 mo</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="sub" style="margin-top:8px">Benchmarks: LTV:CAC ≥ 3× · payback ≤ 12 months. <b>The model clears both even in the conservative case.</b></div>
+
+  <div class="grid2">
+    <div class="card accent">
+      <h3>What is a hypothesis — and how it gets measured</h3>
+      <ul>
+        <li><b>Cost to serve</b> — token usage per agent, measured directly in the 3 design-partner pilots (first 60 days).</li>
+        <li><b>Churn</b> — weekly active usage as the leading indicator; month-2/3 cohort retention as proof.</li>
+        <li><b>CAC $800</b> — planning number for the salaried-bizdev motion; validated with the first hire. Founder-led sales today are near-zero cash CAC.</li>
+        <li><b>Price $300</b> — accepted by 3 design partners (discounted pilots); list-price validation on the next 10 non-partner sales.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>What is already known</h3>
+      <ul>
+        <li><b>3 design partners</b> committed to pilot and pay — willingness to pay exists.</li>
+        <li><b>The engine is live</b> — Keepstar runs in production (2–4s responses, data never passes through the LLM).</li>
+        <li><b>The lift is real</b> — the same automation playbook at Homeapp took agent conversion 0.2 → 1.2 deals/mo (6×).</li>
+        <li><b>Cost structure is controllable</b> — start on aggregators (zero capex), own inference at scale → margin grows.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>2 · How the money grows — a calibrated hypothesis portfolio</h2>
+  <div class="sub">We don't run on a feature roadmap. Every feature and channel is <b>a bet on one economic metric</b>, with a stated confidence. Bets resolve weekly; the forecast is discounted to our measured hypothesis hit rate (start: a deliberately humble <b>20%</b>).</div>
+
+  <div class="tblwrap">
+  <table>
+    <thead><tr>
+      <th>Bet (Q4'26)</th>
+      <th>Metric it moves</th>
+      <th>Expected effect</th>
+      <th>Confidence</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="name">Salaried bizdev #1</td><td class="c">Lead volume</td><td>+30 qualified leads/mo</td><td class="c">0.7</td></tr>
+      <tr><td class="name">Buyer chat search + sharing <b>(viral loop)</b></td><td class="c">Lead volume</td><td>+25 leads/mo, compounding</td><td class="c">0.7</td></tr>
+      <tr><td class="name">Agent lead-exchange network <b>(network effect)</b></td><td class="c">Lead volume</td><td>+20 leads/mo — every shared lead pulls a new agent in</td><td class="c">0.7</td></tr>
+      <tr><td class="name">Time-to-first-wow &lt; 5 min onboarding</td><td class="c">Conversion</td><td>+10 pp close rate</td><td class="c">0.5</td></tr>
+      <tr><td class="name">In-agency trial — seat a few realtors, results pull the rest</td><td class="c">Conversion</td><td>+8 pp close rate · test cost ≈ 1 subscription</td><td class="c">0.5</td></tr>
+      <tr><td class="name">Founder-led content (build in public)</td><td class="c">Lead volume</td><td>+10 leads/mo, $0 cash</td><td class="c">0.5</td></tr>
+      <tr><td class="name">"Powered by FlashHouse" on client-facing artifacts</td><td class="c">Lead volume</td><td>+15 leads/mo organic</td><td class="c">0.3</td></tr>
+      <tr><td class="name">Micro-influencers in real-estate niche</td><td class="c">Lead volume</td><td>+20 leads/mo</td><td class="c">0.3</td></tr>
+      <tr><td class="name">Photo visual enhancement for listings</td><td class="c">Churn</td><td>−1 pp monthly churn</td><td class="c">0.5</td></tr>
+      <tr><td class="name">Agency training methodology (ours, proven)</td><td class="c">Churn</td><td>−1 pp churn — raises the agency's own conversions</td><td class="c">0.5</td></tr>
+      <tr><td class="name">List-price test on new signups</td><td class="c">ARPU</td><td>+10% on new revenue</td><td class="c">0.5</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="traj">
+    <div class="kpi"><div class="v">11 · $3.4K</div><div class="l">agencies · MRR<br>if no bet works</div></div>
+    <div class="kpi hl"><div class="v">22 · $6.9K</div><div class="l"><b>calibrated forecast</b><br>at 20% hit rate</div></div>
+    <div class="kpi"><div class="v">47 · $14.8K</div><div class="l">if stated confidences<br>are right</div></div>
+    <div class="kpi"><div class="v">~50 · $15K</div><div class="l">seed gate<br>target: month ~9</div></div>
+  </div>
+
+  <div class="card accent" style="margin-top:16px">
+    <h3>The operating rhythm</h3>
+    Weekly: each active bet ships 1–3 micro-experiments → resolved bets flip to confirmed (1) or killed (0) → the forecast tightens toward reality.
+    After ~2 months we replace the 20% assumption with our <b>measured hit rate</b> — the forecast becomes self-correcting.
+    Growth guardrail: <b>+7%/week MRR is the red line, +15%/week is the plan</b> (the Q4 plan above is a 16%/week trajectory).
+  </div>
+
+  <div class="foot">
+    FlashHouse — AI-native CRM for real estate · Brazil first · Vladislav (CTO, Keepstar) &amp; Ivan (CEO) · July 2026.
+    All forward-looking numbers are hypotheses under active validation; measured pilot data replaces them as it arrives.
+  </div>
+</body>
+</html>

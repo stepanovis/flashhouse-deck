@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      tailwind = { config: { corePlugins: { preflight: false } } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter%3Awght%40100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      /* i18n: Russian body/paragraph text is typically 15-25% longer than English.
+         Elements that were pinned to a single line via [white-space:nowrap] in the
+         source (utility class, not overridable inline) get relaxed to normal wrapping
+         in RU mode so long phrases wrap inside their card instead of overflowing the
+         fixed 1920x1080 slide horizontally. */
+      html[lang="ru"] .i18n-nowrap {
+        white-space: normal !important;
+      }
+
+      #lang-toggle {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 9999;
+        display: flex;
+        gap: 2px;
+        background: #ffffff;
+        border: 1px solid #e5e9f0;
+        border-radius: 999px;
+        padding: 4px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+        font-family: Inter, system-ui, sans-serif;
+      }
+      #lang-toggle button {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: transparent;
+        color: #6b7280;
+        transition: background 0.15s ease, color 0.15s ease;
+      }
+      #lang-toggle button.active {
+        background: #3f88c0;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="lang-toggle"
+      data-pencil-name="Lang toggle"
+    >
+      <button type="button" id="lang-btn-en" class="active" onclick="__fhSetLang('en')">EN</button>
+      <button type="button" id="lang-btn-ru" onclick="__fhSetLang('ru')">RU</button>
+    </div>
+    <div class="relative w-[1920px] mx-auto flex flex-col items-center gap-[64px] py-[64px] bg-[#F3F4F6]">
+      <div
+        data-pencil-name="FH 01 · Cover"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[100px_120px] justify-between items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Brand"
+          class="box-border w-fit h-fit shrink-0 flex flex-row gap-[14px] justify-start items-center"
+        >
+          <svg
+            data-pencil-name="Logo"
+            data-icon-name="zap"
+            data-icon-set="lucide"
+            viewBox="0 0 13.99993896484375 14"
+            preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg"
+            class="box-border w-[36px] shrink-0 h-[36px]"
+          >
+            <path
+              d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+              fill="#5BA4D9"
+            ></path>
+          </svg>
+          <div data-pencil-name="Wordmark" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-0.5px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+        </div>
+        <div
+          data-pencil-name="Hero"
+          class="box-border w-fit h-fit shrink-0 flex flex-col gap-[44px] justify-start items-start"
+        >
+          <div
+            data-pencil-name="Title"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-0 justify-start items-start"
+          >
+            <div
+              data-pencil-name="Line 1"
+              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 justify-start items-center"
+            >
+              <div data-pencil-name="T1a" class="text-[98px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="The AI-native" data-ru="ИИ-нативная">The AI-native</div>
+              <div data-pencil-name="T1b" class="text-[98px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="CRM" data-ru="CRM">CRM</div>
+            </div>
+            <div data-pencil-name="Line 2" class="text-[98px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="for real estate." data-ru="для недвижимости.">for real estate.</div>
+          </div>
+          <div data-pencil-name="Subtitle" class="text-[34px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-medium text-left [white-space:nowrap] i18n i18n-nowrap" data-en="One chat that runs the whole deal — buyers, sellers, agents." data-ru="Один чат, который ведёт всю сделку — покупателей, продавцов, агентов.">One chat that runs the whole deal — buyers, sellers, agents.</div>
+        </div>
+        <div data-pencil-name="Meta" class="text-[22px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Brazil · 2026 · Pre-seed" data-ru="Бразилия · 2026 · Pre-seed">Brazil · 2026 · Pre-seed</div>
+      </div>
+      <div
+        data-pencil-name="FH 02 · Problem"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="PROBLEM" data-ru="ПРОБЛЕМА">PROBLEM</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="02 / 10" data-ru="02 / 10">02 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[56px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Hero"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[8px] justify-start items-start"
+          >
+            <div data-pencil-name="Big number" class="text-[190px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-6px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="1–3% Absolute CR" data-ru="1–3% реальной конверсии">1–3% Absolute CR</div>
+            <div data-pencil-name="Headline" class="text-[62px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="In real estate is dreadful." data-ru="в сфере недвижимости — это провал.">In real estate is dreadful.</div>
+          </div>
+          <div
+            data-pencil-name="Explanation"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[4px] justify-start items-start"
+          >
+            <div data-pencil-name="L1" class="text-[30px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Bad operations meet poor UX and weak products —" data-ru="Слабые операционные процессы, неудобный UX и посредственные продукты —">Bad operations meet poor UX and weak products —</div>
+            <div data-pencil-name="L2" class="text-[30px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="the gap between good and bad sellers is tremendous." data-ru="разрыв между хорошими и плохими продавцами огромен.">the gap between good and bad sellers is tremendous.</div>
+          </div>
+          <div
+            data-pencil-name="Note"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-[12px] justify-start items-end"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[22px] shrink-0 h-[22px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="T" class="text-[22px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="We've fixed this before — agent conversion 0.2 → 1.2 deals/mo after automating agency ops (Homeapp)." data-ru="Мы уже решали эту задачу — конверсия агента выросла с 0.2 до 1.2 сделки/мес после автоматизации процессов агентства (Homeapp).">We've fixed this before — agent conversion 0.2 → 1.2 deals/mo after automating agency ops (Homeapp).</div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 03 · Solution"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SOLUTION" data-ru="РЕШЕНИЕ">SOLUTION</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="03 / 10" data-ru="03 / 10">03 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[72px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 justify-start items-start"
+          >
+            <div data-pencil-name="Ha" class="text-[66px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="One-stop chat" data-ru="Единый чат">One-stop chat</div>
+            <div data-pencil-name="Hb" class="text-[66px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="for agents and clients." data-ru="для агентов и клиентов.">for agents and clients.</div>
+          </div>
+          <div
+            data-pencil-name="Roles"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[48px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="AGENTS"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[18px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Chip"
+                class="box-border w-[72px] h-[72px] shrink-0 flex flex-row gap-0 justify-center items-center bg-[#EAF2F9] rounded-[36px]"
+              >
+                <svg
+                  data-pencil-name="Icon"
+                  data-icon-name="briefcase"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="box-border w-[34px] shrink-0 h-[34px]"
+                >
+                  <path
+                    d="M5.65674 0.60156q-0.44775 0.04102-0.84766 0.32129-0.3999 0.28027-0.58105 0.70069-0.08545 0.21191-0.1128 0.37939-0.02734 0.16748-0.02734 0.50244l-0.01367 0.42041-0.96729 0q-0.79639 0-1.00146 0.01367-0.20166 0.01367-0.41016 0.09912-0.37939 0.15381-0.65967 0.46143-0.28027 0.30762-0.39306 0.70068-0.02734 0.14014-0.04102 0.32129-0.01367 0.23926-0.02734 0.92285l0.01367 4.84668q0.01367 0.48877 0.02734 0.5708 0.12646 0.54688 0.50928 0.90577 0.38623 0.35547 0.91944 0.45459 0.16748 0.02734 4.95605 0.02734 4.78857 0 4.95605-0.02734 0.5332-0.09912 0.91602-0.45459 0.38623-0.35889 0.5127-0.90577 0.01367-0.08203 0.02734-0.5708l0.01367-4.84668q-0.01367-0.68359-0.02734-0.92285-0.01367-0.18115-0.04102-0.32129-0.11279-0.39307-0.39307-0.70068-0.28027-0.30762-0.65966-0.46143-0.2085-0.08545-0.41358-0.09912-0.20166-0.01367-0.99804-0.01367l-0.96729 0-0.01367-0.42041q0-0.28027-0.00684-0.37598-0.00684-0.09912-0.03418-0.21191-0.15381-0.56055-0.57422-0.91602-0.42041-0.35889-0.99462-0.41357-0.16748-0.01367-1.31592-0.00684-1.14844 0.00684-1.32959 0.02051z m2.74463 1.20313q0.19482 0.09912 0.29394 0.29394 0.02734 0.07178 0.03418 0.13672 0.00684 0.06152 0.02051 0.32813l0 0.3623-3.5 0 0-0.3623q0.01367-0.2666 0.02051-0.32813 0.00684-0.06494 0.03418-0.13672 0.08545-0.18115 0.22558-0.24951l0-0.01367q0.08203-0.04443 0.16748-0.05811 0.08545-0.01367 0.36573-0.02734l2.23877 0.01367 0.09912 0.04102z m-4.32715 5.76953l0 3.5-0.92285 0q-0.67334 0-0.81348 0-0.14014 0-0.2085-0.02734-0.21191-0.08545-0.3247-0.29395l-0.04102-0.09912 0-6.13184 0.04102-0.09912q0.05811-0.12646 0.16748-0.21533 0.11279-0.09229 0.25293-0.10596 0.09912-0.02734 0.96728-0.02734l0.88184 0 0 3.5z m4.67578 0l0 3.5-3.5 0 0-7 3.5 0 0 3.5z m3.01123-3.47266q0.30762 0.04102 0.43408 0.32129l0.04102 0.09912 0 6.13184-0.04102 0.09912q-0.11279 0.2085-0.32471 0.29395-0.06836 0.02734-0.20849 0.02734-0.14014 0-0.81348 0l-0.92285 0 0-7 0.85449 0q0.86817 0 0.98096 0.02734z"
+                    fill="#3F88C0"
+                  ></path>
+                </svg>
+              </div>
+              <div data-pencil-name="Role" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="AGENTS" data-ru="АГЕНТЫ">AGENTS</div>
+              <div data-pencil-name="D" class="text-[28px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-semibold text-left i18n" data-en="An AI-native CRM, a concierge, and the agency network." data-ru="ИИ-нативная CRM, консьерж и сеть агентств.">An AI-native CRM, a concierge, and the agency network.</div>
+            </div>
+            <div
+              data-pencil-name="SELLERS"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[18px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Chip"
+                class="box-border w-[72px] h-[72px] shrink-0 flex flex-row gap-0 justify-center items-center bg-[#EAF2F9] rounded-[36px]"
+              >
+                <svg
+                  data-pencil-name="Icon"
+                  data-icon-name="house"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="box-border w-[34px] shrink-0 h-[34px]"
+                >
+                  <path
+                    d="M6.81885 0.60156q-0.47852 0.02734-0.85449 0.32129-0.12646 0.09912-2.21143 1.89014l-1.60986 1.38769q-0.44775 0.38965-0.58789 0.56055-0.11279 0.10938-0.19825 0.28027l0 0.01368q-0.08203 0.15381-0.12646 0.30761l-0.05469 0.15381 0.01367 5.4585q0 0.43408 0.02735 0.51953 0.14014 0.48877 0.46826 0.82031 0.33154 0.32813 0.82031 0.46826 0.08545 0.02734 0.71436 0.02735l3.78027 0.01367 3.78027-0.01367q0.62891 0 0.71436-0.02735 0.48877-0.14014 0.81689-0.46826 0.33154-0.33154 0.47168-0.82031 0.02734-0.08545 0.02735-0.51953l0.01367-5.4585-0.05469-0.15381q-0.04443-0.15381-0.12646-0.30761l0-0.01368q-0.08545-0.1709-0.18457-0.28027-0.14014-0.1709-0.5879-0.54687l-3.78027-3.24707q-0.52979-0.43408-1.27148-0.36573z m0.43408 1.2168q0.08203 0.04443 2.11914 1.78076 2.03711 1.73633 2.1499 1.85938l0.02735 0.03076q0.07178 0.06836 0.08545 0.16748 0.01367 0.12646 0.02734 0.58789l0 4.96972-0.04102 0.09913q-0.14014 0.27685-0.43408 0.33496-0.09912 0.02734-0.98096 0.02734l-0.88183 0 0-3.83496q0-0.39307-0.02734-0.5332-0.01367-0.09912-0.07178-0.2085l-0.02735-0.04443q-0.09912-0.22217-0.30078-0.37598-0.20166-0.15381-0.44092-0.22558-0.09912-0.02734-0.30761-0.02735l-1.14844 0-1.14844 0q-0.2085 0-0.30761 0.02735-0.23926 0.07178-0.44092 0.22558-0.20166 0.15381-0.30078 0.37598l-0.02735 0.04443q-0.05811 0.10938-0.07178 0.2085-0.02734 0.14014-0.02734 0.5332l0 3.83496-0.88183 0q-0.88184 0-0.98096-0.02734-0.29395-0.05811-0.43408-0.33496l-0.04102-0.09913 0-4.99706q0.01367-0.44775 0.04102-0.5879 0.01367-0.09912 0.08545-0.1538l0.05468-0.05811q0.08545-0.08203 2.08496-1.79785 2.00293-1.71582 2.08838-1.77051 0.11279-0.08545 0.27344-0.09228 0.16064-0.00684 0.28711 0.06152z m0.92285 7.7998l0 2.05762-2.35156 0 0-4.10156 2.35156 0 0 2.04394z"
+                    fill="#3F88C0"
+                  ></path>
+                </svg>
+              </div>
+              <div data-pencil-name="Role" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SELLERS" data-ru="ПРОДАВЦЫ">SELLERS</div>
+              <div data-pencil-name="D" class="text-[28px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-semibold text-left i18n" data-en="Flash publishing and full control of the deal." data-ru="Мгновенная публикация и полный контроль над сделкой.">Flash publishing and full control of the deal.</div>
+            </div>
+            <div
+              data-pencil-name="BUYERS"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[18px] justify-start items-start"
+            >
+              <div
+                data-pencil-name="Chip"
+                class="box-border w-[72px] h-[72px] shrink-0 flex flex-row gap-0 justify-center items-center bg-[#EAF2F9] rounded-[36px]"
+              >
+                <svg
+                  data-pencil-name="Icon"
+                  data-icon-name="search"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="box-border w-[34px] shrink-0 h-[34px]"
+                >
+                  <path
+                    d="M6.00537 1.17578q-0.04102 0.01367-0.23584 0.02734-0.57422 0.07178-1.16211 0.29053-0.58789 0.21533-1.09375 0.5503-0.39307 0.2666-0.74853 0.61181-0.35547 0.3418-0.62207 0.7041-0.646 0.92285-0.86817 2.03028-0.05811 0.28027-0.07861 0.46142-0.02051 0.18115-0.02051 0.57422 0 0.43408 0.02734 0.68018 0.02734 0.24268 0.12647 0.59472 0.19482 0.75537 0.60156 1.43555 0.40674 0.67676 0.96729 1.18262 0.40674 0.3623 0.81689 0.60156 0.41357 0.23926 0.91944 0.43408 1.06299 0.39307 2.21826 0.29395 1.15527-0.09912 2.1499-0.65967 0.12646-0.06836 0.33496-0.2085 0.2085-0.14014 0.29395-0.21191l0.05468-0.05469 1.10743 1.10742q1.12109 1.104 1.20312 1.15528 0.08545 0.04785 0.23926 0.04785 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.05127-0.23584-0.04785-0.08545-1.15186-1.20654l-1.10742-1.10743 0.05469-0.06836q0.05811-0.05469 0.19824-0.25293 0.82373-1.23047 0.89209-2.70703 0.07178-1.47656-0.63916-2.76513-0.5332-0.96729-1.42187-1.64405-0.88867-0.68018-1.95508-0.9331-0.29395-0.06836-0.54004-0.09571-0.24268-0.03076-0.60498-0.04443-0.43408 0-0.49219 0z m0.7417 1.17578q0.37939 0.01367 0.79297 0.14014 0.41357 0.12646 0.78955 0.32129 0.7417 0.39307 1.28857 1.08008 0.54687 0.68359 0.75538 1.49707 0.07178 0.28027 0.09228 0.49902 0.02051 0.21533 0.02051 0.50928 0 0.70068-0.19483 1.30224-0.39307 1.16211-1.33984 1.91065-0.94336 0.74853-2.16016 0.875-0.19824 0.01367-0.49218 0.00683-0.29395-0.00684-0.48877-0.03418-0.5332-0.08545-1.03907-0.30761-0.50244-0.22559-0.93652-0.56055-0.14014-0.12646-0.35205-0.3418-0.2085-0.21875-0.33154-0.37256-0.57422-0.76904-0.7417-1.69531-0.08545-0.43408-0.06494-0.90918 0.02051-0.4751 0.11963-0.89551 0.29395-1.14844 1.18945-1.95849 0.89551-0.81348 2.05762-1.02539 0.18115-0.02734 0.42041-0.04102 0.23926-0.01367 0.34863-0.01367l0.2666 0.01367z"
+                    fill="#3F88C0"
+                  ></path>
+                </svg>
+              </div>
+              <div data-pencil-name="Role" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[3px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="BUYERS" data-ru="ПОКУПАТЕЛИ">BUYERS</div>
+              <div data-pencil-name="D" class="text-[28px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-semibold text-left i18n" data-en="Rich conversational search and sharing." data-ru="Глубокий поиск в диалоге и обмен подборками.">Rich conversational search and sharing.</div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Punchline"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-center items-center"
+          >
+            <div data-pencil-name="P1" class="text-[46px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="All three get" data-ru="Все трое получают">All three get</div>
+            <div data-pencil-name="P2" class="text-[46px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="quicker results." data-ru="результат быстрее.">quicker results.</div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 04 · How it works"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="HOW IT WORKS" data-ru="КАК ЭТО РАБОТАЕТ">HOW IT WORKS</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="04 / 10" data-ru="04 / 10">04 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[72px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 justify-start items-start"
+          >
+            <div data-pencil-name="Ha" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Three loops." data-ru="Три цикла.">Three loops.</div>
+            <div data-pencil-name="Hb" class="text-[68px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="One outcome." data-ru="Один результат.">One outcome.</div>
+          </div>
+          <div
+            data-pencil-name="Spider wrap"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-center items-start"
+          >
+            <div
+              data-pencil-name="Spider"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-[56px] justify-start items-center"
+            >
+              <div
+                data-pencil-name="Lanes"
+                class="box-border w-fit shrink-0 h-fit flex flex-col gap-[44px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="BUYER lane"
+                  class="box-border w-fit h-fit shrink-0 flex flex-row gap-[28px] justify-start items-center"
+                >
+                  <div
+                    data-pencil-name="Pill"
+                    class="box-border w-[180px] shrink-0 h-fit flex flex-row gap-[8px] p-[10px_0px] justify-center items-center bg-[#F5F7FA] rounded-[999px]"
+                  >
+                    <svg
+                      data-pencil-name="Cycle"
+                      data-icon-name="repeat"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M9.82666 0.60156q-0.29395 0.02734-0.42725 0.30078-0.12988 0.27344 0.01026 0.54004 0.02734 0.06836 0.72461 0.76905l0.70068 0.71435-6.41211 0q-0.62891 0-0.7417 0.02735-0.96387 0.14014-1.6372 0.81347-0.62891 0.60156-0.82715 1.49707-0.01367 0.11279-0.02735 0.23242-0.01367 0.11963-0.01367 0.48194 0 0.39307 0 0.48535 0 0.08887 0.02734 0.15723 0.08545 0.21191 0.29395 0.3247 0.09912 0.04102 0.25293 0.04102 0.15381 0 0.25293-0.04102 0.2085-0.11279 0.29394-0.3247 0.01367-0.05469 0.02051-0.12305 0.00684-0.07178 0.00684-0.29395 0-0.45117 0.04101-0.69384 0.04443-0.24609 0.16748-0.46827 0.21191-0.40674 0.58106-0.65966 0.37256-0.25293 0.83398-0.28028 0.19482-0.02734 3.54102-0.02734l3.34619 0-0.70068 0.71435q-0.69727 0.70068-0.72461 0.76905-0.14014 0.2666-0.01709 0.5332 0.12646 0.2666 0.42041 0.32129 0.19824 0.02734 0.37939-0.05469 0.06836-0.04443 1.30567-1.28174 1.24072-1.24072 1.28515-1.30908 0.02734-0.05811 0.03418-0.10596 0.00684-0.04785 0.00684-0.16064 0-0.11279-0.00684-0.16064-0.00684-0.04785-0.04443-0.10938-0.03418-0.06494-1.20996-1.24756-1.17578-1.18604-1.30225-1.26806-0.18115-0.15381-0.43408-0.1128z m2.2832 6.41211q-0.12647 0.02734-0.23926 0.1333-0.10938 0.10596-0.16748 0.23242-0.01367 0.05469-0.0205 0.12647-0.00684 0.06836-0.00684 0.29053 0 0.45117-0.04443 0.69726-0.04102 0.24268-0.16406 0.46485-0.35205 0.68701-1.13477 0.91259l-0.16748 0.04102-7 0.01367 0.69726-0.71435q0.70068-0.70068 0.72803-0.76905 0.09912-0.18115 0.05811-0.38281-0.04102-0.20508-0.18799-0.33838-0.14697-0.1333-0.35889-0.1333-0.12646 0-0.20508 0.02734-0.0752 0.02734-0.15722 0.08545-0.12646 0.0957-1.30225 1.28174-1.17578 1.18262-1.21338 1.24756-0.03418 0.06152-0.04101 0.10937-0.00684 0.04785-0.00684 0.16065 0 0.11279 0.00684 0.16065 0.00684 0.04785 0.03418 0.10595 0.04443 0.06836 1.28174 1.30908 1.24072 1.2373 1.30908 1.28174 0.2666 0.12305 0.5332 0 0.2666-0.12646 0.32129-0.42041 0.02734-0.19824-0.05469-0.37939-0.04443-0.06836-0.74512-0.76905l-0.69726-0.71435 7.15381 0 0.16748-0.04102q0.89551-0.21191 1.49707-0.81347 0.60156-0.60156 0.7998-1.4834 0.01367-0.11279 0.02735-0.22901 0.01367-0.11963 0.01367-0.48535 0-0.39307 0-0.48193 0-0.09229-0.02735-0.16065-0.08545-0.19824-0.27343-0.30078-0.18799-0.10596-0.41358-0.06494z"
+                        fill="#3F88C0"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="Role" class="text-[17px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="BUYER" data-ru="ПОКУПАТЕЛЬ">BUYER</div>
+                  </div>
+                  <div
+                    data-pencil-name="Words"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+                  >
+                    <div data-pencil-name="ASK" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="ASK" data-ru="СПРОСИТЬ">ASK</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="SEE" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SEE" data-ru="УВИДЕТЬ">SEE</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="REFINE" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="REFINE" data-ru="УТОЧНИТЬ">REFINE</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="VISIT" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="VISIT" data-ru="ПОСЕТИТЬ">VISIT</div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="SELLER lane"
+                  class="box-border w-fit h-fit shrink-0 flex flex-row gap-[28px] justify-start items-center"
+                >
+                  <div
+                    data-pencil-name="Pill"
+                    class="box-border w-[180px] shrink-0 h-fit flex flex-row gap-[8px] p-[10px_0px] justify-center items-center bg-[#F5F7FA] rounded-[999px]"
+                  >
+                    <svg
+                      data-pencil-name="Cycle"
+                      data-icon-name="repeat"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M9.82666 0.60156q-0.29395 0.02734-0.42725 0.30078-0.12988 0.27344 0.01026 0.54004 0.02734 0.06836 0.72461 0.76905l0.70068 0.71435-6.41211 0q-0.62891 0-0.7417 0.02735-0.96387 0.14014-1.6372 0.81347-0.62891 0.60156-0.82715 1.49707-0.01367 0.11279-0.02735 0.23242-0.01367 0.11963-0.01367 0.48194 0 0.39307 0 0.48535 0 0.08887 0.02734 0.15723 0.08545 0.21191 0.29395 0.3247 0.09912 0.04102 0.25293 0.04102 0.15381 0 0.25293-0.04102 0.2085-0.11279 0.29394-0.3247 0.01367-0.05469 0.02051-0.12305 0.00684-0.07178 0.00684-0.29395 0-0.45117 0.04101-0.69384 0.04443-0.24609 0.16748-0.46827 0.21191-0.40674 0.58106-0.65966 0.37256-0.25293 0.83398-0.28028 0.19482-0.02734 3.54102-0.02734l3.34619 0-0.70068 0.71435q-0.69727 0.70068-0.72461 0.76905-0.14014 0.2666-0.01709 0.5332 0.12646 0.2666 0.42041 0.32129 0.19824 0.02734 0.37939-0.05469 0.06836-0.04443 1.30567-1.28174 1.24072-1.24072 1.28515-1.30908 0.02734-0.05811 0.03418-0.10596 0.00684-0.04785 0.00684-0.16064 0-0.11279-0.00684-0.16064-0.00684-0.04785-0.04443-0.10938-0.03418-0.06494-1.20996-1.24756-1.17578-1.18604-1.30225-1.26806-0.18115-0.15381-0.43408-0.1128z m2.2832 6.41211q-0.12647 0.02734-0.23926 0.1333-0.10938 0.10596-0.16748 0.23242-0.01367 0.05469-0.0205 0.12647-0.00684 0.06836-0.00684 0.29053 0 0.45117-0.04443 0.69726-0.04102 0.24268-0.16406 0.46485-0.35205 0.68701-1.13477 0.91259l-0.16748 0.04102-7 0.01367 0.69726-0.71435q0.70068-0.70068 0.72803-0.76905 0.09912-0.18115 0.05811-0.38281-0.04102-0.20508-0.18799-0.33838-0.14697-0.1333-0.35889-0.1333-0.12646 0-0.20508 0.02734-0.0752 0.02734-0.15722 0.08545-0.12646 0.0957-1.30225 1.28174-1.17578 1.18262-1.21338 1.24756-0.03418 0.06152-0.04101 0.10937-0.00684 0.04785-0.00684 0.16065 0 0.11279 0.00684 0.16065 0.00684 0.04785 0.03418 0.10595 0.04443 0.06836 1.28174 1.30908 1.24072 1.2373 1.30908 1.28174 0.2666 0.12305 0.5332 0 0.2666-0.12646 0.32129-0.42041 0.02734-0.19824-0.05469-0.37939-0.04443-0.06836-0.74512-0.76905l-0.69726-0.71435 7.15381 0 0.16748-0.04102q0.89551-0.21191 1.49707-0.81347 0.60156-0.60156 0.7998-1.4834 0.01367-0.11279 0.02735-0.22901 0.01367-0.11963 0.01367-0.48535 0-0.39307 0-0.48193 0-0.09229-0.02735-0.16065-0.08545-0.19824-0.27343-0.30078-0.18799-0.10596-0.41358-0.06494z"
+                        fill="#3F88C0"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="Role" class="text-[17px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SELLER" data-ru="ПРОДАВЕЦ">SELLER</div>
+                  </div>
+                  <div
+                    data-pencil-name="Words"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+                  >
+                    <div data-pencil-name="UPLOAD" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="UPLOAD" data-ru="ЗАГРУЗИТЬ">UPLOAD</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="OBSERVE" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="OBSERVE" data-ru="НАБЛЮДАТЬ">OBSERVE</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="SELL" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SELL" data-ru="ПРОДАТЬ">SELL</div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="AGENT lane"
+                  class="box-border w-fit h-fit shrink-0 flex flex-row gap-[28px] justify-start items-center"
+                >
+                  <div
+                    data-pencil-name="Pill"
+                    class="box-border w-[180px] shrink-0 h-fit flex flex-row gap-[8px] p-[10px_0px] justify-center items-center bg-[#F5F7FA] rounded-[999px]"
+                  >
+                    <svg
+                      data-pencil-name="Cycle"
+                      data-icon-name="repeat"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[16px] shrink-0 h-[16px]"
+                    >
+                      <path
+                        d="M9.82666 0.60156q-0.29395 0.02734-0.42725 0.30078-0.12988 0.27344 0.01026 0.54004 0.02734 0.06836 0.72461 0.76905l0.70068 0.71435-6.41211 0q-0.62891 0-0.7417 0.02735-0.96387 0.14014-1.6372 0.81347-0.62891 0.60156-0.82715 1.49707-0.01367 0.11279-0.02735 0.23242-0.01367 0.11963-0.01367 0.48194 0 0.39307 0 0.48535 0 0.08887 0.02734 0.15723 0.08545 0.21191 0.29395 0.3247 0.09912 0.04102 0.25293 0.04102 0.15381 0 0.25293-0.04102 0.2085-0.11279 0.29394-0.3247 0.01367-0.05469 0.02051-0.12305 0.00684-0.07178 0.00684-0.29395 0-0.45117 0.04101-0.69384 0.04443-0.24609 0.16748-0.46827 0.21191-0.40674 0.58106-0.65966 0.37256-0.25293 0.83398-0.28028 0.19482-0.02734 3.54102-0.02734l3.34619 0-0.70068 0.71435q-0.69727 0.70068-0.72461 0.76905-0.14014 0.2666-0.01709 0.5332 0.12646 0.2666 0.42041 0.32129 0.19824 0.02734 0.37939-0.05469 0.06836-0.04443 1.30567-1.28174 1.24072-1.24072 1.28515-1.30908 0.02734-0.05811 0.03418-0.10596 0.00684-0.04785 0.00684-0.16064 0-0.11279-0.00684-0.16064-0.00684-0.04785-0.04443-0.10938-0.03418-0.06494-1.20996-1.24756-1.17578-1.18604-1.30225-1.26806-0.18115-0.15381-0.43408-0.1128z m2.2832 6.41211q-0.12647 0.02734-0.23926 0.1333-0.10938 0.10596-0.16748 0.23242-0.01367 0.05469-0.0205 0.12647-0.00684 0.06836-0.00684 0.29053 0 0.45117-0.04443 0.69726-0.04102 0.24268-0.16406 0.46485-0.35205 0.68701-1.13477 0.91259l-0.16748 0.04102-7 0.01367 0.69726-0.71435q0.70068-0.70068 0.72803-0.76905 0.09912-0.18115 0.05811-0.38281-0.04102-0.20508-0.18799-0.33838-0.14697-0.1333-0.35889-0.1333-0.12646 0-0.20508 0.02734-0.0752 0.02734-0.15722 0.08545-0.12646 0.0957-1.30225 1.28174-1.17578 1.18262-1.21338 1.24756-0.03418 0.06152-0.04101 0.10937-0.00684 0.04785-0.00684 0.16065 0 0.11279 0.00684 0.16065 0.00684 0.04785 0.03418 0.10595 0.04443 0.06836 1.28174 1.30908 1.24072 1.2373 1.30908 1.28174 0.2666 0.12305 0.5332 0 0.2666-0.12646 0.32129-0.42041 0.02734-0.19824-0.05469-0.37939-0.04443-0.06836-0.74512-0.76905l-0.69726-0.71435 7.15381 0 0.16748-0.04102q0.89551-0.21191 1.49707-0.81347 0.60156-0.60156 0.7998-1.4834 0.01367-0.11279 0.02735-0.22901 0.01367-0.11963 0.01367-0.48535 0-0.39307 0-0.48193 0-0.09229-0.02735-0.16065-0.08545-0.19824-0.27343-0.30078-0.18799-0.10596-0.41358-0.06494z"
+                        fill="#3F88C0"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="Role" class="text-[17px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="AGENT" data-ru="АГЕНТ">AGENT</div>
+                  </div>
+                  <div
+                    data-pencil-name="Words"
+                    class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+                  >
+                    <div data-pencil-name="CAPTURE" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="CAPTURE" data-ru="ЗАФИКСИРОВАТЬ">CAPTURE</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="MATCH" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="MATCH" data-ru="ПОДОБРАТЬ">MATCH</div>
+                    <svg
+                      data-pencil-name="Arr"
+                      data-icon-name="arrow-right"
+                      data-icon-set="lucide"
+                      viewBox="0 0 13.99993896484375 14"
+                      preserveAspectRatio="xMidYMid meet"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="box-border w-[26px] shrink-0 h-[26px]"
+                    >
+                      <path
+                        d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                        fill="#5BA4D9"
+                      ></path>
+                    </svg>
+                    <div data-pencil-name="CLOSE" class="text-[44px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="CLOSE" data-ru="ЗАКРЫТЬ">CLOSE</div>
+                  </div>
+                </div>
+              </div>
+              <svg
+                data-pencil-name="Converge"
+                data-icon-name="arrow-right"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                class="box-border w-[64px] shrink-0 h-[64px]"
+              >
+                <path
+                  d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                  fill="#5BA4D9"
+                ></path>
+              </svg>
+              <div
+                data-pencil-name="Deal"
+                class="box-border w-[280px] shrink-0 h-[280px] flex flex-col gap-[12px] justify-center items-center bg-[#5BA4D9] rounded-[140px]"
+              >
+                <svg
+                  data-pencil-name="Key"
+                  data-icon-name="key-round"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="box-border w-[56px] h-[56px] shrink-0"
+                >
+                  <path
+                    d="M8.68164 0.57422q-0.60498 0.05469-1.13476 0.25293-0.32129 0.12646-0.67334 0.32812-0.34863 0.20166-0.62891 0.44092-0.40674 0.34863-0.72803 0.79639-0.32129 0.44775-0.51953 0.93994-0.15381 0.39307-0.22559 0.72803-0.06836 0.33496-0.08203 0.75537-0.01367 0.51953 0.09912 1.02197l0.04102 0.18115-1.89014 1.89014q-1.89014 1.87646-2.00293 2.0166-0.19482 0.2666-0.29394 0.58789-0.04102 0.16748-0.05469 0.39307-0.01367 0.22217 0 0.81006l0 0.61865q0.01367 0.15381 0.02734 0.22217 0.09912 0.29394 0.31446 0.51953 0.21875 0.22217 0.52636 0.30762 0.06836 0.01367 0.25293 0.02734l0.90918 0 0.92286 0q0.18457-0.01367 0.25293-0.02734 0.23926-0.07178 0.44091-0.23243 0.20166-0.16064 0.31446-0.38281 0.07178-0.15723 0.09228-0.27344 0.02051-0.11963 0.02051-0.42724l0.01367-0.39307 0.39307-0.01367q0.30762 0 0.42383-0.02051 0.11963-0.02051 0.27685-0.09228 0.22217-0.11279 0.38281-0.30762 0.16064-0.19482 0.23243-0.43408 0.02734-0.11279 0.02734-0.48877l0.01367-0.39307 0.21192-0.01367q0.3623-0.04102 0.64941-0.18115 0.28711-0.14014 0.55371-0.42041l0.14014-0.14014 0.19482 0.04102q0.50586 0.11279 1.06983 0.09228 0.56738-0.02051 1.07324-0.17432 0.90918-0.28027 1.62353-0.91259 0.75537-0.65625 1.14844-1.56543 0.34863-0.84082 0.3418-1.74317-0.00684-0.90576-0.36914-1.75683-0.28027-0.63232-0.7793-1.16895-0.49561-0.54004-1.1416-0.89209-0.2085-0.10937-0.51612-0.229-0.30762-0.11963-0.56054-0.17432-0.30762-0.07178-0.70752-0.10596-0.3999-0.03418-0.67676-0.00683z m0.79639 1.18945q0.79639 0.09912 1.43896 0.56055 0.646 0.46143 1.01172 1.16211 0.15381 0.33496 0.23584 0.6289 0.05811 0.23926 0.07861 0.39307 0.02051 0.15381 0.02051 0.44775-0.01367 0.25293-0.02051 0.35206-0.00684 0.0957-0.03418 0.24951-0.11279 0.5332-0.36572 0.96728-0.42041 0.75537-1.16894 1.18262-0.74853 0.42725-1.60303 0.42725-0.28027 0-0.48535-0.02735-0.20166-0.03076-0.47852-0.11279-0.32471-0.09912-0.51953-0.01367-0.08545 0.04102-0.39307 0.34179-0.30762 0.30078-0.41357 0.35889-0.10254 0.05469-0.35547 0.06836-0.19482 0.01367-0.30762 0.04102-0.11279 0.02734-0.24609 0.09228-0.1333 0.06152-0.28711 0.21533-0.15381 0.15381-0.2085 0.28028-0.08545 0.16748-0.09912 0.27343-0.01367 0.10596-0.02734 0.44092l0 0.40674-0.40674 0q-0.33496 0.01367-0.44775 0.03418-0.11279 0.02051-0.28028 0.10596-0.12646 0.05469-0.28027 0.20849-0.15381 0.15381-0.2085 0.28028-0.08545 0.16748-0.09912 0.27343-0.01367 0.10596-0.02734 0.44092l0 0.40674-1.75 0 0-0.70068q0.01367-0.52978 0.01367-0.62891 0-0.09912 0.03418-0.16748 0.0376-0.07178 0.38623-0.43408 0.34863-0.36572 1.73633-1.75 1.42871-1.44238 1.75684-1.77735 0.32813-0.33838 0.34179-0.39306 0.04443-0.11279 0.04444-0.18799 0-0.07861-0.03077-0.20508l-0.08203-0.29394q-0.08545-0.3623-0.08545-0.77588 0-0.41357 0.09913-0.79297 0.2085-0.86816 0.85107-1.49707 0.646-0.62891 1.52783-0.82715 0.54688-0.13672 1.13477-0.05469z m-0.08545 1.76367q-0.22217 0.05811-0.38965 0.23243-0.16748 0.17432-0.22559 0.3999-0.08203 0.32129 0.07178 0.6289 0.04102 0.08203 0.16065 0.20166 0.11963 0.11963 0.20166 0.16065 0.19824 0.09912 0.41357 0.09912 0.21533 0 0.41357-0.09912 0.08203-0.04102 0.20166-0.16065 0.11963-0.11963 0.16065-0.20166 0.12646-0.25293 0.09228-0.52636-0.03418-0.27344-0.23242-0.46826-0.26318-0.29395-0.64258-0.29395-0.09912 0-0.22558 0.02734z"
+                    fill="#FFFFFF"
+                  ></path>
+                </svg>
+                <div data-pencil-name="T" class="text-[42px]/[normal] box-border text-[#FFFFFF] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="DEAL" data-ru="СДЕЛКА">DEAL</div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Caption wrap"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-center items-start"
+          >
+            <div data-pencil-name="Caption" class="text-[26px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="All three run in one chat — and close into the same deal." data-ru="Все три сценария идут в одном чате — и закрываются в одну сделку.">All three run in one chat — and close into the same deal.</div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 05 · Moat"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="MOAT" data-ru="ЗАЩИТА">MOAT</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="05 / 10" data-ru="05 / 10">05 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[64px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[2px] justify-start items-start"
+          >
+            <div data-pencil-name="H1" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="The tech can be copied." data-ru="Технологию можно скопировать.">The tech can be copied.</div>
+            <div data-pencil-name="H2" class="text-[68px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="The data can't." data-ru="Данные — нет.">The data can't.</div>
+          </div>
+          <div
+            data-pencil-name="Pillars"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[32px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="The engine is live"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="01 · HEAD START" data-ru="01 · СТАРТОВАЯ ФОРА">01 · HEAD START</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left i18n" data-en="The engine is live" data-ru="Движок уже работает">The engine is live</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Gen-UI in production: 2–4s answers, data never passes through the LLM — zero hallucinated prices. We ship while others bolt bots onto forms." data-ru="Gen-UI в проде: ответы за 2–4 секунды, данные никогда не проходят через LLM — ноль галлюцинаций в ценах. Мы уже в бою, пока другие прикручивают ботов к формам.">Gen-UI in production: 2–4s answers, data never passes through the LLM — zero hallucinated prices. We ship while others bolt bots onto forms.</div>
+            </div>
+            <div
+              data-pencil-name="Deals captured before portals"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="02 · DATA FLYWHEEL" data-ru="02 · МАХОВИК ДАННЫХ">02 · DATA FLYWHEEL</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left i18n" data-en="Deals captured before portals" data-ru="Сделки фиксируются раньше порталов">Deals captured before portals</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Every listing enters at the moment of creation. Pre-publication data compounds with every agency — and can't be scraped." data-ru="Каждый объект попадает в систему в момент создания. Допубликационные данные накапливаются с каждым агентством — и их нельзя спарсить.">Every listing enters at the moment of creation. Pre-publication data compounds with every agency — and can't be scraped.</div>
+            </div>
+            <div
+              data-pencil-name="Each agency speeds up the rest"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="03 · NETWORK EFFECT" data-ru="03 · СЕТЕВОЙ ЭФФЕКТ">03 · NETWORK EFFECT</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border w-full text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left i18n" data-en="Each agency speeds up the rest" data-ru="Каждое агентство ускоряет остальные">Each agency speeds up the rest</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="One shared base: more agencies → faster closes → stronger pull for the next agency to join." data-ru="Единая база: больше агентств → быстрее закрытия → сильнее притяжение для следующего агентства.">One shared base: more agencies → faster closes → stronger pull for the next agency to join.</div>
+            </div>
+          </div>
+          <div data-pencil-name="Footer" class="text-[26px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-semibold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="That pre-publication data is what the fund will run on later." data-ru="Именно эти допубликационные данные позже станут основой для фонда.">That pre-publication data is what the fund will run on later.</div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 06 · Market"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="MARKET" data-ru="РЫНОК">MARKET</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="06 / 10" data-ru="06 / 10">06 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[72px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[2px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Line 1"
+              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 justify-start items-center"
+            >
+              <div data-pencil-name="Ha" class="text-[68px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="70,000" data-ru="70,000">70,000</div>
+              <div data-pencil-name="Hb" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="agencies in Brazil." data-ru="агентств в Бразилии.">agencies in Brazil.</div>
+            </div>
+            <div data-pencil-name="Line 2" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="No portal owns them." data-ru="Ни один портал их не контролирует.">No portal owns them.</div>
+          </div>
+          <div
+            data-pencil-name="Stats"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[40px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="TAM · GLOBAL"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[12px] justify-start items-start"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="TAM · GLOBAL" data-ru="TAM · В МИРЕ">TAM · GLOBAL</div>
+              <div data-pencil-name="Value" class="text-[64px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="$3.8–4.7B" data-ru="$3.8–4.7B">$3.8–4.7B</div>
+              <div data-pencil-name="Label" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="real estate CRM software spend per year" data-ru="расходы на CRM для недвижимости в год">real estate CRM software spend per year</div>
+            </div>
+            <div
+              data-pencil-name="SAM · OUR PROFILE"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[12px] justify-start items-start"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SAM · OUR PROFILE" data-ru="SAM · НАШ ПРОФИЛЬ">SAM · OUR PROFILE</div>
+              <div data-pencil-name="Value" class="text-[64px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="~$310M" data-ru="~$310M">~$310M</div>
+              <div data-pencil-name="Label" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="~103K agencies in BR · MX · AR · MA · PE × $250/mo" data-ru="~103K агентств в BR · MX · AR · MA · PE × $250/мес">~103K agencies in BR · MX · AR · MA · PE × $250/mo</div>
+            </div>
+            <div
+              data-pencil-name="SOM · 18 MONTHS"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[12px] justify-start items-start"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SOM · 18 MONTHS" data-ru="SOM · 18 МЕСЯЦЕВ">SOM · 18 MONTHS</div>
+              <div data-pencil-name="Value" class="text-[64px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-1px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="$1.5M" data-ru="$1.5M">$1.5M</div>
+              <div data-pencil-name="Label" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="ARR — ~500 paying agencies in Brazil" data-ru="ARR — ~500 платящих агентств в Бразилии">ARR — ~500 paying agencies in Brazil</div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Why now"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-[8px] justify-start items-center"
+          >
+            <div data-pencil-name="F1" class="text-[26px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Buyers already shop by chat — portals still run filter forms." data-ru="Покупатели уже выбирают через чат — порталы всё ещё используют формы с фильтрами.">Buyers already shop by chat — portals still run filter forms.</div>
+            <div data-pencil-name="F2" class="text-[26px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="We move before a portal bolts on a chatbot." data-ru="Мы действуем раньше, чем портал прикрутит себе чат-бота.">We move before a portal bolts on a chatbot.</div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 07 · Business model"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="BUSINESS MODEL" data-ru="БИЗНЕС-МОДЕЛЬ">BUSINESS MODEL</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="07 / 10" data-ru="07 / 10">07 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[64px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[2px] justify-start items-start"
+          >
+            <div data-pencil-name="H1" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Subscription + tokens." data-ru="Подписка + токены.">Subscription + tokens.</div>
+            <div data-pencil-name="H2" class="text-[68px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Usage growth is revenue growth." data-ru="Рост использования — это рост выручки.">Usage growth is revenue growth.</div>
+          </div>
+          <div
+            data-pencil-name="Model cards"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[32px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="SaaS fee + token pool"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="REVENUE" data-ru="ВЫРУЧКА">REVENUE</div>
+              <div data-pencil-name="T" class="text-[32px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SaaS fee + token pool" data-ru="Плата за SaaS + пул токенов">SaaS fee + token pool</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="A flat platform fee per agency plus an included AI-token pool (~$250/mo ARPU). Overage billed on top." data-ru="Фиксированная плата за платформу с агентства плюс включённый пул AI-токенов (~$250/мес ARPU). Перерасход оплачивается отдельно.">A flat platform fee per agency plus an included AI-token pool (~$250/mo ARPU). Overage billed on top.</div>
+            </div>
+            <div
+              data-pencil-name="Aggregators → own inference"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="COST" data-ru="СЕБЕСТОИМОСТЬ">COST</div>
+              <div data-pencil-name="T" class="text-[32px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Aggregators → own inference" data-ru="Агрегаторы → собственный инференс">Aggregators → own inference</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Zero capex at the start — tokens resold via aggregators. At scale: own inference on small models. Unit cost drops, margin grows." data-ru="Ноль капзатрат на старте — токены перепродаются через агрегаторов. При масштабировании — собственный инференс на малых моделях. Юнит-издержки снижаются, маржа растёт.">Zero capex at the start — tokens resold via aggregators. At scale: own inference on small models. Unit cost drops, margin grows.</div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Traction"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[24px] p-[28px_40px] justify-start items-center [border:2px_solid_#E5E9F0] rounded-[20px]"
+          >
+            <svg
+              data-pencil-name="Handshake"
+              data-icon-name="handshake"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[40px] shrink-0 h-[40px]"
+            >
+              <path
+                d="M1.59619 1.18945q-0.12646 0.04102-0.23926 0.14698-0.10938 0.10596-0.14697 0.21191-0.03418 0.10254-0.3418 3.38037l-0.29394 3.27441 0.04101 0.12647q0.02734 0.12646 0.1128 0.22559 0.12646 0.14014 2.03027 2.03027 1.90381 1.89014 1.98926 1.9585 0.26318 0.19482 0.60156 0.29394 0.15381 0.04101 0.39649 0.05811 0.24609 0.01367 0.41357-0.03077 0.58789-0.11279 0.98096-0.51611 0.19482-0.21191 0.30761-0.43408l0.07178-0.14014q0 0 0.15381 0.06836 0.18115 0.09912 0.33496 0.1333 0.15381 0.03418 0.37598 0.03418 0.2666 0.01367 0.46826-0.02734 0.20508-0.04101 0.43066-0.15381 0.4751-0.23926 0.7417-0.70068 0.05469-0.0957 0.11621-0.23584 0.06494-0.14014 0.07862-0.23926l0.02734-0.09912 0.2666 0q0.22559 0 0.35547-0.02735 0.1333-0.02734 0.34521-0.11279 0.30762-0.10938 0.57422-0.37598 0.2666-0.2666 0.38282-0.56738 0.11963-0.30078 0.14697-0.58105l0-0.14014 0.33838 0q0.22217-0.01367 0.28369-0.02051 0.06494-0.00684 0.12305-0.03418 0.12305-0.05811 0.22217-0.18115 0.09912-0.12646 0.12646-0.2666 0.01367-0.07178-0.28711-3.33252-0.30078-3.26416-0.32812-3.35303-0.02734-0.09229-0.1128-0.18799-0.08545-0.09912-0.17773-0.14013-0.08887-0.04443-0.21533-0.05811-0.12647-0.01367-0.23243 0.02051-0.10254 0.03418-0.20849 0.14014-0.10254 0.10596-0.14014 0.19824-0.03418 0.08887-0.03418 0.21533 0 0.06836-0.00683 0.09229-0.00684 0.02051-0.03418 0.0205-0.14014 0.04102-0.36573 0.07862-0.22217 0.03418-0.28027 0.03418-0.14014 0-0.42041-0.1709-0.41699-0.24951-0.78272-0.38281-0.3623-0.1333-0.78271-0.20508-0.22559-0.04102-0.62549-0.04102-0.39648 0-0.62207 0.04102-0.70068 0.12646-1.25781 0.44775l-0.1709 0.08545-4.00244 0 0-0.05469q0-0.04443-0.02734-0.14013-0.02734-0.09912-0.14014-0.21192-0.11279-0.11279-0.19824-0.14013-0.08203-0.02734-0.19483-0.02735-0.11279 0-0.16748 0.01367z m7.2666 1.17578q0.2666 0.04443 0.50244 0.14356 0.23926 0.0957 0.57422 0.29053 0.30762 0.16748 0.42041 0.22558 0.25293 0.0957 0.51612 0.1128 0.2666 0.01367 0.61865-0.05811 0.2666-0.05469 0.27344-0.04785 0.00684 0.00684 0.21533 2.21826l0.21191 2.32422-0.28027 0-1.24756-1.23389q-0.93652-0.93652-1.19629-1.17236-0.25977-0.23926-0.45459-0.35205-0.44775-0.25293-0.98779-0.28711-0.54004-0.03418-1.01514 0.16064-0.28027 0.11279-0.48535 0.25977-0.20166 0.14697-0.55029 0.49219-0.34863 0.3418-0.40674 0.36914-0.12646 0.08203-0.32813 0.08203-0.20166 0-0.34179-0.08203-0.29395-0.19482-0.29395-0.56055 0-0.16748 0.06836-0.30762 0.02734-0.05469 0.92969-0.96386 0.90576-0.9126 1.0459-1.0254 0.65625-0.52979 1.52441-0.60156 0.32129-0.04102 0.68701 0.01367z m-4.45361 1.13477q-0.46143 0.4751-0.60156 0.65283-0.14014 0.17432-0.23242 0.38623-0.08887 0.2085-0.10938 0.3418-0.02051 0.12988-0.02051 0.36914 0 0.23926 0.02051 0.37256 0.02051 0.12988 0.11963 0.3418 0.10938 0.30762 0.37598 0.57421 0.2666 0.2666 0.57421 0.37598 0.21191 0.09912 0.3418 0.11963 0.1333 0.02051 0.37256 0.02051 0.23926 0 0.36914-0.02051 0.1333-0.02051 0.32813-0.10254 0.19824-0.08545 0.36572-0.21191 0.16748-0.12646 0.49219-0.44776 0.28027-0.2666 0.3623-0.33496 0.08545-0.07178 0.18115-0.12646 0.51953-0.25293 1.05274 0 0.10938 0.05469 0.28369 0.22558 0.17773 0.16748 1.11426 1.09033l0.21191 0.22217q0.62891 0.61865 0.79639 0.79981 0.23926 0.23926 0.29394 0.34863 0.04102 0.08545 0.04102 0.21191l0 0.04102q0 0.11279-0.01367 0.15381-0.01367 0.04102-0.04102 0.11279-0.12647 0.28027-0.39307 0.34863-0.12647 0.04443-0.28027 0.03077-0.15381-0.01709-0.23584-0.08545-0.05811-0.02734-0.85791-0.8169-0.79639-0.79297-0.86475-0.83398-0.11279-0.07178-0.27343-0.07178-0.16064 0-0.28711 0.07178-0.2085 0.0957-0.28028 0.32812-0.06836 0.229 0.04444 0.45459 0.02734 0.06836 0.68359 0.7417l0.50586 0.50244q0.15381 0.1709 0.19483 0.24268 0.04102 0.06836 0.05468 0.17773 0.04443 0.33838-0.19482 0.57422-0.29395 0.28027-0.70069 0.12647-0.05469-0.02734-0.18115-0.1333-0.12646-0.10596-0.57422-0.56739-0.67334-0.65625-0.7417-0.69726-0.11279-0.07178-0.27343-0.07178-0.16064 0-0.28711 0.07178-0.2085 0.0957-0.28028 0.32812-0.06836 0.229 0.02735 0.45459 0.04443 0.06836 0.2666 0.29395 0.18115 0.18115 0.23584 0.28027 0.05811 0.0957 0.07178 0.22217 0.05811 0.32471-0.18116 0.56055-0.29395 0.28027-0.70068 0.14013-0.06836-0.02734-0.35547-0.30761-0.28711-0.28027-1.60303-1.58252l-1.84912-1.8628 0.44776-5.01074 2.77197 0-0.58789 0.57422z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div
+              data-pencil-name="Traction text"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[4px] justify-start items-start"
+            >
+              <div data-pencil-name="T" class="text-[28px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-semibold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="3 Brazilian agencies already committed as design partners" data-ru="3 бразильских агентства уже подтвердили участие как дизайн-партнёры">3 Brazilian agencies already committed as design partners</div>
+              <div data-pencil-name="D" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="verbal today — piloting in tranche 1" data-ru="устная договорённость сегодня — пилот в транше 1">verbal today — piloting in tranche 1</div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Unit economics link"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-start items-center"
+          >
+            <a
+              href="unit-economics.html"
+              target="_blank"
+              rel="noopener"
+              data-pencil-name="Unit economics anchor"
+              class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-semibold text-left [white-space:nowrap] no-underline hover:underline"
+            ><span data-pencil-name="Unit economics label" class="i18n i18n-nowrap" data-en="See the full unit-economics breakdown →" data-ru="Полный расчёт юнит-экономики →">See the full unit-economics breakdown →</span></a>
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 08 · Roadmap"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="ROADMAP" data-ru="ДОРОЖНАЯ КАРТА">ROADMAP</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="08 / 10" data-ru="08 / 10">08 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[64px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-row gap-[28px] justify-start items-center"
+          >
+            <div data-pencil-name="CRM" class="text-[84px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="CRM" data-ru="CRM">CRM</div>
+            <svg
+              data-pencil-name="A1"
+              data-icon-name="arrow-right"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[48px] shrink-0 h-[48px]"
+            >
+              <path
+                d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Network" class="text-[84px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Network" data-ru="Сеть">Network</div>
+            <svg
+              data-pencil-name="A2"
+              data-icon-name="arrow-right"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[48px] shrink-0 h-[48px]"
+            >
+              <path
+                d="M6.90088 2.35156q-0.18115 0.02734-0.32129 0.16748-0.11279 0.11279-0.14697 0.28028-0.03418 0.16748 0.02051 0.32129 0.02734 0.08545 0.25976 0.3247 0.23242 0.23584 1.36377 1.37061 1.58252 1.58252 1.58252 1.59619 0 0.01367-3.45557 0.01367l-3.44531 0-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.53321 0.03418l3.01123 0q3.42822 0 3.42822 0.01367 0 0.01367-1.58252 1.59619-1.13135 1.13477-1.36377 1.37402-0.23242 0.23584-0.25976 0.3213-0.05469 0.15381-0.02051 0.32128 0.03418 0.16748 0.14697 0.28028 0.18115 0.18115 0.42041 0.18115l0.04102 0q0.11279 0 0.19824-0.05469 0.14014-0.09912 0.51611-0.46484l1.68164-1.67822q2.1123-2.10205 2.15332-2.18409 0.07178-0.12646 0.07178-0.28027 0-0.15381-0.07178-0.28027-0.04102-0.08203-2.1499-2.18067-2.10547-2.10205-2.17725-2.13623-0.06836-0.0376-0.23584-0.06494-0.04102 0-0.12646 0.01367z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Fund" class="text-[84px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Fund." data-ru="Фонд.">Fund.</div>
+          </div>
+          <div
+            data-pencil-name="Stages"
+            class="box-border w-full h-[300px] shrink-0 flex flex-row gap-[32px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Prove the lift"
+              class="box-border [flex:1_1_0] h-full flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[22px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="PRE-SEED · PRODUCT" data-ru="PRE-SEED · ПРОДУКТ">PRE-SEED · PRODUCT</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Prove the lift" data-ru="Доказать эффект">Prove the lift</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Ship with design partners, measure the conversion lift → PMF: a clear reason every agency switches." data-ru="Запуск с дизайн-партнёрами, измеряем прирост конверсии → PMF: понятная причина для перехода каждого агентства.">Ship with design partners, measure the conversion lift → PMF: a clear reason every agency switches.</div>
+            </div>
+            <div
+              data-pencil-name="Push what works"
+              class="box-border [flex:1_1_0] h-full flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[22px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SEED · SCALE" data-ru="SEED · МАСШТАБИРОВАНИЕ">SEED · SCALE</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Push what works" data-ru="Масштабировать то, что работает">Push what works</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="City by city. Agencies join one shared listing network that closes faster." data-ru="Город за городом. Агентства присоединяются к единой сети объектов, которая закрывает сделки быстрее.">City by city. Agencies join one shared listing network that closes faster.</div>
+            </div>
+            <div
+              data-pencil-name="Own the deals"
+              class="box-border [flex:1_1_0] h-full flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[22px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="SERIES A · CAPITAL" data-ru="SERIES A · КАПИТАЛ">SERIES A · CAPITAL</div>
+              <div data-pencil-name="T" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Own the deals" data-ru="Владеть сделками">Own the deals</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="The model spots undervalued homes before publication. A REIT-style fund buys below market, sells shares of the portfolio." data-ru="Модель находит недооценённые объекты до публикации. Фонд в формате REIT покупает ниже рынка, продаёт доли в портфеле.">The model spots undervalued homes before publication. A REIT-style fund buys below market, sells shares of the portfolio.</div>
+            </div>
+          </div>
+          <div data-pencil-name="Footer" class="text-[30px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Own the operations, then the data, then the capital." data-ru="Сначала операции, затем данные, затем капитал.">Own the operations, then the data, then the capital.</div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 09 · Team"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="TEAM" data-ru="КОМАНДА">TEAM</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="09 / 10" data-ru="09 / 10">09 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[56px] justify-center items-start"
+        >
+          <div data-pencil-name="Headline" class="text-[64px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="One built the engine. The other builds markets." data-ru="Один построил движок. Другой строит рынки.">One built the engine. The other builds markets.</div>
+          <div
+            data-pencil-name="Founders"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[32px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Vladislav Starknight"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[24px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div
+                data-pencil-name="Head"
+                class="box-border w-fit h-fit shrink-0 flex flex-row gap-[20px] justify-start items-center"
+              >
+                <div
+                  data-pencil-name="Avatar"
+                  class="box-border w-[88px] shrink-0 h-[88px] flex flex-row gap-0 justify-center items-center bg-[#D8E2EC] rounded-[44px]"
+                >
+                  <div data-pencil-name="Initials" class="text-[30px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="VS" data-ru="VS">VS</div>
+                </div>
+                <div
+                  data-pencil-name="Name block"
+                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-[4px] justify-start items-start"
+                >
+                  <div data-pencil-name="Name" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Vladislav Starknight" data-ru="Vladislav Starknight">Vladislav Starknight</div>
+                  <div data-pencil-name="Role" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-semibold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Founder · CTO" data-ru="Основатель · CTO">Founder · CTO</div>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Points"
+                class="box-border w-full h-fit shrink-0 flex flex-col gap-[14px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Built Keepstar solo — a live production gen-UI engine" data-ru="Построил Keepstar в одиночку — работающий в проде gen-UI движок">Built Keepstar solo — a live production gen-UI engine</div>
+                </div>
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Homeapp proptech: revenue +455% YoY, agent conversion 0.2 → 1.2 deals/mo" data-ru="Homeapp proptech: выручка +455% год к году, конверсия агента 0.2 → 1.2 сделки/мес">Homeapp proptech: revenue +455% YoY, agent conversion 0.2 → 1.2 deals/mo</div>
+                </div>
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Ran his own agency in Bali — ~$500K GMV" data-ru="Управлял собственным агентством на Бали — ~$500K GMV">Ran his own agency in Bali — ~$500K GMV</div>
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Ivan Stepanov"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[24px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div
+                data-pencil-name="Head"
+                class="box-border w-fit h-fit shrink-0 flex flex-row gap-[20px] justify-start items-center"
+              >
+                <div
+                  data-pencil-name="Avatar"
+                  class="box-border w-[88px] shrink-0 h-[88px] flex flex-row gap-0 justify-center items-center bg-[#D8E2EC] rounded-[44px]"
+                >
+                  <div data-pencil-name="Initials" class="text-[30px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="IS" data-ru="IS">IS</div>
+                </div>
+                <div
+                  data-pencil-name="Name block"
+                  class="box-border w-fit shrink-0 h-fit flex flex-col gap-[4px] justify-start items-start"
+                >
+                  <div data-pencil-name="Name" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Ivan Stepanov" data-ru="Ivan Stepanov">Ivan Stepanov</div>
+                  <div data-pencil-name="Role" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-semibold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Co-founder · CEO" data-ru="Со-основатель · CEO">Co-founder · CEO</div>
+                </div>
+              </div>
+              <div
+                data-pencil-name="Points"
+                class="box-border w-full h-fit shrink-0 flex flex-col gap-[14px] justify-start items-start"
+              >
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Built two CRM systems end to end" data-ru="Построил две CRM-системы «под ключ»">Built two CRM systems end to end</div>
+                </div>
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="4 years at Skyeng — Eastern Europe's largest online school" data-ru="4 года в Skyeng — крупнейшей онлайн-школе Восточной Европы">4 years at Skyeng — Eastern Europe's largest online school</div>
+                </div>
+                <div
+                  data-pencil-name="Point"
+                  class="box-border w-full h-fit shrink-0 flex flex-row gap-[12px] justify-start items-start"
+                >
+                  <svg
+                    data-pencil-name="Check"
+                    data-icon-name="check"
+                    data-icon-set="lucide"
+                    viewBox="0 0 13.99993896484375 14"
+                    preserveAspectRatio="xMidYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="box-border w-[24px] shrink-0 h-[24px]"
+                  >
+                    <path
+                      d="M11.48096 2.95313q-0.07178 0.01367-0.12989 0.0581-0.05469 0.04102-3.07617 3.06592l-3.0249 3.00781-1.28857-1.28857q-1.28857-1.28516-1.38086-1.32618-0.08887-0.04443-0.22217-0.04443-0.1333 0-0.23242 0.0376-0.0957 0.03418-0.18799 0.11279-0.08887 0.0752-0.1333 0.1709-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014l0 0.04102q-0.01367 0.11279 0.04102 0.19824 0.07178 0.10938 0.36572 0.40332 0.19482 0.21191 0.96729 0.98096l1.49707 1.48339q0.28027 0.2666 0.38964 0.33838 0.07178 0.05469 0.18457 0.04102l0.09571 0.01367q0.07178 0 0.14013-0.02734 0.08545-0.07178 0.32129-0.28711 0.23926-0.21875 0.79981-0.76221l2.2832-2.2832q2.08496-2.09863 2.7002-2.71387 0.61524-0.61865 0.64599-0.68701 0.04102-0.08545 0.04102-0.23926 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18115-0.11963-0.08887-0.0376-0.20849-0.0376-0.11963 0-0.18799 0.02734z"
+                      fill="#5BA4D9"
+                    ></path>
+                  </svg>
+                  <div data-pencil-name="T" class="text-[24px]/[normal] box-border [flex:1_1_0] text-[#111827] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Launched a biotech startup as product manager" data-ru="Запустил биотех-стартап в роли продакт-менеджера">Launched a biotech startup as product manager</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-pencil-name="Footer" class="text-[24px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Real estate runs through the whole career — state registry (KPMG · DOM.RF), proptech, own agency." data-ru="Недвижимость проходит через всю карьеру — государственный реестр (KPMG · DOM.RF), проптех, собственное агентство.">Real estate runs through the whole career — state registry (KPMG · DOM.RF), proptech, own agency.</div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="FH 10 · Ask"
+        class="box-border w-[1920px] h-[1080px] relative flex flex-col gap-0 p-[80px_120px_90px_120px] justify-start items-start bg-[#FFFFFF] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+      >
+        <div
+          data-pencil-name="Chrome"
+          class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+        >
+          <div
+            data-pencil-name="Brand"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[10px] justify-start items-center"
+          >
+            <svg
+              data-pencil-name="Mark"
+              data-icon-name="zap"
+              data-icon-set="lucide"
+              viewBox="0 0 13.99993896484375 14"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              class="box-border w-[26px] shrink-0 h-[26px]"
+            >
+              <path
+                d="M7.7417 0.60156q-0.16748 0.02734-0.33496 0.1128-0.09912 0.06836-2.81641 2.87109l-2.88135 2.98047q-0.35205 0.36572-0.39306 0.44775l-0.01367 0.01367q-0.09912 0.21191-0.12647 0.44776-0.04102 0.37939 0.14014 0.68701 0.18115 0.30762 0.50244 0.46143l0.04443 0.02734q0.0957 0.04443 0.19483 0.0581 0.12646 0.02734 0.51953 0.02735l3.83496 0.02734-0.57422 1.79102q-0.57422 1.79443-0.57422 1.89013-0.04102 0.25293 0.09912 0.50586 0.14014 0.25293 0.37598 0.37598 0.39307 0.18457 0.77246 0 0.12646-0.06836 0.32129-0.24951l5.59863-5.7832q0.22559-0.22559 0.30762-0.42041 0.08545-0.19482 0.08545-0.4751 0-0.32129-0.16748-0.59473-0.16748-0.27344-0.46143-0.42725l-0.04443-0.01367q-0.0957-0.05811-0.19483-0.07177-0.14014-0.02734-0.51953-0.02735l-3.84863-0.02734 0.57422-1.79102q0.57422-1.79443 0.57422-1.89013 0.04102-0.25293-0.09912-0.50586-0.14014-0.25293-0.39307-0.37598-0.24951-0.12646-0.50244-0.07178z m-0.92285 3.19239q-0.37939 1.20313-0.39307 1.32959-0.02734 0.19482 0.02051 0.3999 0.05127 0.20166 0.16064 0.36914 0.07178 0.09912 0.20508 0.21875 0.1333 0.11963 0.24268 0.17431l0.04443 0.02735q0.10938 0.05811 0.2085 0.07178 0.14014 0.01367 0.51953 0.02734l3.82129 0.01367-2.42334 2.50537q-2.41992 2.4917-2.42676 2.4917-0.00684 0 0.37598-1.20996 0.38623-1.20996 0.3999-1.33643 0.02734-0.19482-0.02393-0.39648-0.04785-0.20508-0.15722-0.35889-0.05811-0.08545-0.16407-0.19482-0.10254-0.11279-0.18798-0.15723-0.16748-0.10938-0.37598-0.16748-0.07178-0.01367-2.19775-0.02734l-2.11573 0 2.42334-2.50537q2.41992-2.4917 2.42676-2.4917 0.00684 0-0.38281 1.2168z"
+                fill="#5BA4D9"
+              ></path>
+            </svg>
+            <div data-pencil-name="Wordmark" class="text-[22px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="FlashHouse" data-ru="FlashHouse">FlashHouse</div>
+          </div>
+          <div
+            data-pencil-name="Meta"
+            class="box-border w-fit shrink-0 h-fit flex flex-row gap-[16px] justify-start items-center"
+          >
+            <div data-pencil-name="Section" class="text-[20px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="THE ASK" data-ru="ЗАПРОС">THE ASK</div>
+            <div data-pencil-name="Index" class="text-[20px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="10 / 10" data-ru="10 / 10">10 / 10</div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="Content"
+          class="box-border w-full [flex:1_1_0] flex flex-col gap-[60px] justify-center items-start"
+        >
+          <div
+            data-pencil-name="Headline"
+            class="box-border w-fit h-fit shrink-0 flex flex-col gap-[2px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Line 1"
+              class="box-border w-fit h-fit shrink-0 flex flex-row gap-0 justify-start items-center"
+            >
+              <div data-pencil-name="Ha" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Raising" data-ru="Привлекаем">Raising</div>
+              <div data-pencil-name="Hb" class="text-[68px]/[normal] box-border text-[#5BA4D9] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="$1.1–1.2M" data-ru="$1.1–1.2M">$1.1–1.2M</div>
+              <div data-pencil-name="Hc" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="in tranches." data-ru="траншами.">in tranches.</div>
+            </div>
+            <div data-pencil-name="Line 2" class="text-[68px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-extrabold tracking-[-2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="$300K opens Brazil." data-ru="$300K открывают Бразилию.">$300K opens Brazil.</div>
+          </div>
+          <div
+            data-pencil-name="Tranches"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-[32px] justify-start items-start"
+          >
+            <div
+              data-pencil-name="Product"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="TRANCHE 1 · $300K · 9 MONTHS" data-ru="ТРАНШ 1 · $300K · 9 МЕСЯЦЕВ">TRANCHE 1 · $300K · 9 MONTHS</div>
+              <div data-pencil-name="T" class="text-[32px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Product" data-ru="Продукт">Product</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Team of 4–5, ~$24–28K/mo burn: ship the chat, CRM core and field app. Pilots with 3 design partners → PMF metrics." data-ru="Команда 4–5 человек, burn ~$24–28K/мес: запускаем чат, ядро CRM и мобильное приложение. Пилоты с 3 дизайн-партнёрами → метрики PMF.">Team of 4–5, ~$24–28K/mo burn: ship the chat, CRM core and field app. Pilots with 3 design partners → PMF metrics.</div>
+            </div>
+            <div
+              data-pencil-name="Go-to-market"
+              class="box-border [flex:1_1_0] h-fit flex flex-col gap-[14px] p-[36px_40px] justify-start items-start bg-[#F5F7FA] rounded-[20px]"
+            >
+              <div data-pencil-name="Tag" class="text-[18px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold tracking-[2px] text-left [white-space:nowrap] i18n i18n-nowrap" data-en="TRANCHE 2 · $780–880K · MONTHS 10–18" data-ru="ТРАНШ 2 · $780–880K · МЕСЯЦЫ 10–18">TRANCHE 2 · $780–880K · MONTHS 10–18</div>
+              <div data-pencil-name="T" class="text-[32px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="Go-to-market" data-ru="Выход на рынок">Go-to-market</div>
+              <div data-pencil-name="D" class="text-[24px]/[normal] box-border w-full text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left i18n" data-en="Field sales: one city proves the motion, then 10 cities × 3 reps in parallel + 2 regional managers + ~$150K marketing &amp; association partnerships." data-ru="Полевые продажи: один город подтверждает модель, затем 10 городов × 3 менеджера параллельно + 2 региональных руководителя + ~$150K маркетинг и партнёрства с ассоциациями.">Field sales: one city proves the motion, then 10 cities × 3 reps in parallel + 2 regional managers + ~$150K marketing &amp; association partnerships.</div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="Closing"
+            class="box-border w-full h-fit shrink-0 flex flex-row gap-0 justify-between items-center"
+          >
+            <div
+              data-pencil-name="Statement"
+              class="box-border w-fit shrink-0 h-fit flex flex-col gap-[4px] justify-start items-start"
+            >
+              <div data-pencil-name="S1" class="text-[30px]/[normal] box-border text-[#111827] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="The engine is live. The market is still empty." data-ru="Движок уже работает. Рынок всё ещё пуст.">The engine is live. The market is still empty.</div>
+              <div data-pencil-name="S2" class="text-[30px]/[normal] box-border text-[#3F88C0] font-[Inter,system-ui,sans-serif] font-bold text-left [white-space:nowrap] i18n i18n-nowrap" data-en="This round decides who gets it." data-ru="Этот раунд решит, кто его займёт.">This round decides who gets it.</div>
+            </div>
+            <div
+              data-pencil-name="Contact"
+              class="box-border w-fit shrink-0 h-fit flex flex-row gap-[12px] justify-start items-center"
+            >
+              <svg
+                data-pencil-name="Mail"
+                data-icon-name="mail"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                class="box-border w-[26px] shrink-0 h-[26px]"
+              >
+                <path
+                  d="M2.05762 1.77734q-0.28027 0.04102-0.53321 0.16748-0.34863 0.19824-0.58789 0.50586-0.23584 0.30762-0.32129 0.70069-0.01367 0.10938-0.02734 0.66992l0 3.17871 0 3.17871q0.01367 0.56055 0.02734 0.66992 0.11279 0.5332 0.50245 0.90577 0.39307 0.36914 0.92627 0.46826 0.16748 0.02734 4.95605 0.02734 4.78857 0 4.95605-0.02734 0.5332-0.09912 0.92286-0.46826 0.39307-0.37256 0.50586-0.90577 0.01367-0.10938 0.02734-0.66992l0-3.17871 0-3.17871q-0.01367-0.56055-0.02734-0.66992-0.12647-0.54688-0.53321-0.92285-0.40674-0.37939-0.95019-0.46485-0.1709-0.01367-4.93897-0.01367-4.76465 0-4.90478 0.02734z m9.81298 1.17579q0.09912 0.04443 0.18116 0.12304 0.08545 0.0752 0.12646 0.16065 0.04443 0.08203 0.05127 0.12988 0.00684 0.04785 0.00684 0.18799l0 0.21191-2.46436 1.58252q-2.46436 1.56543-2.53613 1.60303-0.06836 0.03418-0.16748 0.03418l-0.02734 0.01367q-0.0957 0.01367-0.2085-0.04102-0.15381-0.07178-0.65967-0.37939l-4.40918-2.81299 0-0.21191q0-0.14014 0.00684-0.18799 0.00684-0.04785 0.04101-0.12305 0.0376-0.07861 0.12647-0.16064 0.09229-0.08545 0.16748-0.1128 0.07861-0.03076 0.70752-0.04443l4.18701 0 4.18701 0q0.61523 0 0.68359 0.02735z m-5.63964 5.02783q0.22217 0.10938 0.46142 0.15381 0.09912 0.02734 0.30762 0.02734 0.2085 0 0.30762-0.02734 0.30762-0.05811 0.54687-0.19825 0.14014-0.08203 2.26612-1.42529l2.12939-1.36035-0.01367 5.50293-0.04102 0.09912q-0.11279 0.2085-0.3247 0.29395l-0.09571 0.02734-9.5498 0-0.09571-0.02734q-0.21191-0.08545-0.3247-0.29395l-0.04102-0.09912-0.01367-5.50293 2.17041 1.37402q2.17041 1.38428 2.31055 1.45606z"
+                  fill="#6B7280"
+                ></path>
+              </svg>
+              <div data-pencil-name="Email" class="text-[24px]/[normal] box-border text-[#6B7280] font-[Inter,system-ui,sans-serif] font-normal text-left [white-space:nowrap] i18n i18n-nowrap" data-en="ivan.stepanov.br@gmail.com" data-ru="ivan.stepanov.br@gmail.com">ivan.stepanov.br@gmail.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function __fhSetLang(lang) {
+        document.documentElement.lang = lang;
+        var els = document.querySelectorAll('.i18n');
+        for (var i = 0; i < els.length; i++) {
+          var el = els[i];
+          el.textContent = lang === 'ru' ? el.dataset.ru : el.dataset.en;
+        }
+        var enBtn = document.getElementById('lang-btn-en');
+        var ruBtn = document.getElementById('lang-btn-ru');
+        if (enBtn && ruBtn) {
+          enBtn.classList.toggle('active', lang === 'en');
+          ruBtn.classList.toggle('active', lang === 'ru');
+        }
+      }
+      // Default language on load = EN. Also normalizes whitespace/entities in the
+      // initial markup (source is pretty-printed across multiple lines) to the
+      // clean single-line strings held in data-en.
+      __fhSetLang('en');
+    </script>
+  </body>
+</html>
