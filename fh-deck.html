@@ -63,6 +63,23 @@
         background: #3f88c0;
         color: #ffffff;
       }
+
+      #nav-hint {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        background: #ffffff;
+        border: 1px solid #e5e9f0;
+        border-radius: 999px;
+        padding: 8px 18px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: #6b7280;
+      }
     </style>
   </head>
   <body>
@@ -73,6 +90,7 @@
       <button type="button" id="lang-btn-en" class="active" onclick="__fhSetLang('en')">EN</button>
       <button type="button" id="lang-btn-ru" onclick="__fhSetLang('ru')">RU</button>
     </div>
+    <div id="nav-hint">↑ ↓ arrows to navigate</div>
     <div class="relative w-[1920px] mx-auto flex flex-col items-center gap-[64px] py-[64px] bg-[#F3F4F6]">
       <div
         data-pencil-name="FH 01 · Cover"
@@ -1376,6 +1394,36 @@
       // initial markup (source is pretty-printed across multiple lines) to the
       // clean single-line strings held in data-en.
       __fhSetLang('en');
+    </script>
+    <script>
+      var slides = [].slice.call(document.querySelectorAll('[data-pencil-name^="FH 0"], [data-pencil-name^="FH 1"]'));
+      var N = slides.length;
+      var cur = 0;
+      function goTo(i) {
+        cur = Math.max(0, Math.min(N - 1, i));
+        slides[cur].scrollIntoView({ behavior: 'smooth' });
+      }
+      document.addEventListener('keydown', function (e) {
+        if (e.target.tagName === 'INPUT') return;
+        if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(e.key) !== -1) { e.preventDefault(); goTo(cur + 1); }
+        if (['ArrowLeft', 'ArrowUp', 'PageUp'].indexOf(e.key) !== -1) { e.preventDefault(); goTo(cur - 1); }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+        if (e.key === 'End') { e.preventDefault(); goTo(N - 1); }
+      });
+      var ticking = false;
+      function updateCurFromScroll() {
+        ticking = false;
+        var best = 0, bestDist = Infinity;
+        slides.forEach(function (s, i) {
+          var d = Math.abs(s.getBoundingClientRect().top);
+          if (d < bestDist) { bestDist = d; best = i; }
+        });
+        cur = best;
+      }
+      document.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(updateCurFromScroll); }
+      }, { passive: true });
+      updateCurFromScroll();
     </script>
   </body>
 </html>
